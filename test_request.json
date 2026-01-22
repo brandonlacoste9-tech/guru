@@ -1,0 +1,9 @@
+{
+  "automationId": "test-automation-001",
+  "taskDescription": "Navigate to https://news.ycombinator.com and extract the top headline.",
+  "config": {
+    "useCloud": false,
+    "headless": true,
+    "llmProvider": "google"
+  }
+}
