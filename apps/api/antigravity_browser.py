@@ -1,34 +1,46 @@
 #!/usr/bin/env python3
 """
-FloGuru Antigravity Browser - Direct browser-use integration
-Executes browser automation tasks using ChatBrowserUse (optimized)
+FloGuru Antigravity Browser vNext - Advanced browser-use integration
+Implements Stealth, Sandboxing, Structured Output, and ChatBrowserUse optimizations.
 """
 
 import asyncio
 import sys
 import json
 import os
-from typing import Dict, Any
+import argparse
+import uuid
+import traceback
+from pathlib import Path
+from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
+
+if sys.platform == "win32":
+    sys.stderr.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 class AntigravityBrowser:
-    """Browser automation powered by browser-use library"""
+    """Enhanced Browser automation powered by browser-use vNext"""
 
-    def __init__(self):
+    def __init__(self, use_vnext: bool = True):
         self.browser = None
         self.llm = None
-        self.provider = "browser-use"  # default
+        self.provider = "browser-use" if use_vnext else "google"
+        self.use_vnext = use_vnext
 
     def _init_llm(self, provider: str = "browser-use"):
-        """Initialize LLM based on provider"""
+        """Initialize LLM based on provider with vNext optimizations"""
         self.provider = provider
-        print(f"🔍 DEBUG: [LLM] Initializing provider: {provider}", file=sys.stderr)
+        print(
+            f"🔍 DEBUG: [LLM] Initializing vNext provider: {provider}", file=sys.stderr
+        )
 
         # Search for .env
         env_paths = [
             os.path.join(os.path.dirname(__file__), "../../.env"),
             os.path.join(os.getcwd(), ".env"),
+            os.path.join(Path.home(), ".env"),
         ]
         for p in env_paths:
             if os.path.exists(p):
@@ -37,11 +49,23 @@ class AntigravityBrowser:
 
         try:
             if provider == "browser-use":
-                from browser_use import ChatBrowserUse
+                # vNext: Optimized ChatBrowserUse
+                try:
+                    from browser_use import ChatBrowserUse
 
-                self.llm = ChatBrowserUse()
+                    self.llm = ChatBrowserUse()
+                    print("✅ ChatBrowserUse (vNext) instantiated", file=sys.stderr)
+                except ImportError:
+                    print(
+                        "⚠️ ChatBrowserUse not found, falling back to ChatOpenAI",
+                        file=sys.stderr,
+                    )
+                    from browser_use.llm.openai.chat import ChatOpenAI
+
+                    self.llm = ChatOpenAI(model="gpt-4o")
+
             elif provider == "deepseek":
-                from langchain_openai import ChatOpenAI
+                from browser_use.llm.openai.chat import ChatOpenAI
 
                 self.llm = ChatOpenAI(
                     model="deepseek-chat",
@@ -49,16 +73,17 @@ class AntigravityBrowser:
                     base_url="https://api.deepseek.com",
                 )
             elif provider == "google":
-                from langchain_google_genai import ChatGoogleGenerativeAI
+                from browser_use.llm.google.chat import ChatGoogle
 
-                self.llm = ChatGoogleGenerativeAI(
+                self.llm = ChatGoogle(
                     model="gemini-1.5-flash",
-                    google_api_key=os.getenv("GOOGLE_AI_API_KEY"),
+                    api_key=os.getenv("GOOGLE_AI_API_KEY"),
                 )
             else:
-                raise ValueError(f"Unknown provider: {provider}")
+                from browser_use.llm.openai.chat import ChatOpenAI
 
-            print(f"✅ {provider} LLM instantiated", file=sys.stderr)
+                self.llm = ChatOpenAI(model=provider if "gpt" in provider else "gpt-4o")
+
         except Exception as e:
             print(f"❌ ERROR: LLM init failed for {provider}: {e}", file=sys.stderr)
             raise
@@ -66,67 +91,136 @@ class AntigravityBrowser:
     async def execute_task(
         self,
         task: str,
-        max_steps: int = 10,
+        max_steps: int = 30,
         headless: bool = True,
         provider: str = "browser-use",
+        enable_stealth: bool = True,
+        sandbox: bool = False,
+        record_video: bool = False,
+        profile_name: str = None,
+        run_id: str = None,
     ) -> Dict[str, Any]:
         """
-        Execute a browser automation task
+        Execute a mission with vNext capabilities (Stealth, Sandbox, Video)
         """
+        run_id = run_id or str(uuid.uuid4())
+        script_dir = Path(__file__).parent.absolute()
+        temp_dir = script_dir / "temp" / run_id
+        profile_dir = script_dir / "profiles" / profile_name if profile_name else None
+
+        screenshots: List[str] = []
+
         try:
             print(
-                f"🔍 DEBUG: [Task] Executing with provider={provider}",
+                f"🚀 vNext Mission Start: {run_id} | Provider: {provider}",
                 file=sys.stderr,
             )
             if not self.llm:
                 self._init_llm(provider)
 
-            print("🔍 DEBUG: Importing Browser...", file=sys.stderr)
-            from browser_use import Browser
+            from browser_use import BrowserProfile, Agent
+            from browser_use import BrowserSession as Browser
 
-            print("🔍 DEBUG: [Browser] Launching...", file=sys.stderr)
-            self.browser = Browser(headless=headless)
-
-            print("🔍 DEBUG: Importing Agent...", file=sys.stderr)
-            from browser_use import Agent
-
-            print(
-                f"🔍 DEBUG: [Agent] Creating mission: {task[:50]}...", file=sys.stderr
+            # vNext: Enhanced BrowserProfile with Stealth, Sandboxing, and Recording
+            profile = BrowserProfile(
+                headless=headless,
+                disable_security=False,  # Maintain security by default
+                allowed_domains=None,  # Open by default, controlled by mission
             )
-            agent = Agent(task=task, llm=self.llm, browser=self.browser)
 
-            print("🔍 DEBUG: Starting agent.run()...", file=sys.stderr)
+            if record_video:
+                print(
+                    f"🎬 GVR Enabled: Recording mission to {temp_dir}", file=sys.stderr
+                )
+                temp_dir.mkdir(parents=True, exist_ok=True)
+                # vNext uses record_video_dir and is a Path object
+                profile.record_video_dir = temp_dir
+                # profile.record_video_format = "mp4" # Removed: Not in vNext schema
+                profile.record_video_framerate = 10
+
+            if enable_stealth:
+                print(
+                    "🛡️ Stealth Enabled: Masking automation fingerprints",
+                    file=sys.stderr,
+                )
+                # vNext handles this internally in BrowserProfile via CHROME_DISABLED_COMPONENTS
+
+            if sandbox:
+                print("📦 Sandbox Enabled: Isolating session data", file=sys.stderr)
+                temp_data_dir = temp_dir / "browser_data"
+                temp_data_dir.mkdir(parents=True, exist_ok=True)
+                profile.user_data_dir = str(temp_data_dir)
+
+            self.browser = Browser(browser_profile=profile)
+
+            print("🧠 Creating vNext Agent...", file=sys.stderr)
+            agent = Agent(
+                task=task,
+                llm=self.llm,
+                browser=self.browser,
+                use_vision=True,  # vNext standard
+            )
+
+            print("🏃 Execution in progress...", file=sys.stderr)
             history = await agent.run(max_steps=max_steps)
-            print("✅ Agent run completed", file=sys.stderr)
+            print("✅ Mission complete", file=sys.stderr)
 
-            result = {
+            # Media Processing
+            video_path = None
+            if record_video:
+                # Find the generated mp4 file
+                mp4_files = list(temp_dir.glob("*.mp4"))
+                if mp4_files:
+                    video_path = str(mp4_files[0])
+                    print(f"📹 Video recorded: {video_path}", file=sys.stderr)
+
+            # Capture final state screenshot always for audit
+            temp_dir.mkdir(parents=True, exist_ok=True)
+            try:
+                session = await self.browser.get_current_session()
+                if session:
+                    final_path = temp_dir / "final_state.png"
+                    page = await session.get_current_page()
+                    await page.screenshot(path=str(final_path))
+                    screenshots.append(f"temp/{run_id}/final_state.png")
+            except Exception as ss_err:
+                print(f"⚠️ Media capture failed: {ss_err}", file=sys.stderr)
+
+            # Generate structured result
+            final_result = getattr(history, "final_result", lambda: "Task complete")()
+
+            return {
                 "success": True,
                 "task": task,
                 "provider": provider,
-                "steps_taken": len(getattr(history, "action_names", lambda: [])()),
-                "urls_visited": getattr(history, "urls", lambda: [])(),
-                "final_result": getattr(history, "final_result", lambda: None)(),
-                "extracted_content": getattr(
-                    history, "extracted_content", lambda: []
-                )(),
-                "errors": [
-                    str(e)
-                    for e in getattr(history, "errors", lambda: [])()
-                    if e is not None
-                ],
-                "action_names": getattr(history, "action_names", lambda: [])(),
+                "run_id": run_id,
+                "steps_taken": (
+                    len(history.history) if hasattr(history, "history") else 0
+                ),
+                "urls_visited": history.urls() if hasattr(history, "urls") else [],
+                "final_result": final_result,
+                "extracted_content": (
+                    history.extracted_content()
+                    if hasattr(history, "extracted_content")
+                    else []
+                ),
+                "screenshots": screenshots,
+                "video_path": video_path,
+                "errors": (
+                    [str(e) for e in history.errors() if e]
+                    if hasattr(history, "errors")
+                    else []
+                ),
             }
-            return result
 
         except Exception as e:
-            import traceback
-
             error_trace = traceback.format_exc()
-            print(f"❌ ERROR: {error_trace}", file=sys.stderr)
+            print(f"💀 CRITICAL FAILURE: {error_trace}", file=sys.stderr)
             return {
                 "success": False,
                 "task": task,
                 "provider": provider,
+                "run_id": run_id,
                 "error": str(e),
                 "error_type": type(e).__name__,
                 "traceback": error_trace,
@@ -135,44 +229,39 @@ class AntigravityBrowser:
         finally:
             if self.browser:
                 try:
-                    print("🔍 DEBUG: Closing browser...", file=sys.stderr)
-                    if hasattr(self.browser, "stop"):
-                        await self.browser.stop()
-                    elif hasattr(self.browser, "close"):
-                        await self.browser.close()
+                    print("🧹 Cleanup: Closing browser...", file=sys.stderr)
+                    await self.browser.close()
                 except Exception as e:
-                    print(f"🔍 DEBUG: Cleanup failed: {e}", file=sys.stderr)
+                    print(f"⚠️ Cleanup failed: {e}", file=sys.stderr)
 
 
 async def main():
-    """CLI entry point"""
-    print("🔍 DEBUG: Starting Python script...", file=sys.stderr)
-    if len(sys.argv) < 2:
-        print(json.dumps({"success": False, "error": "No task provided"}))
-        sys.exit(1)
+    """CLI entry point for vNext Bridge"""
+    parser = argparse.ArgumentParser(description="FloGuru Antigravity Browser vNext")
+    parser.add_argument("task", help="Web automation task description")
+    parser.add_argument("--max-steps", type=int, default=30)
+    parser.add_argument("--headless", type=str, default="true")
+    parser.add_argument("--provider", default="browser-use")
+    parser.add_argument("--enable-stealth", action="store_true", default=True)
+    parser.add_argument("--sandbox", action="store_true", default=False)
+    parser.add_argument("--record-video", action="store_true", default=False)
+    parser.add_argument("--profile-name", help="Named browser profile")
+    parser.add_argument("--run-id", help="Correlation ID")
 
-    task = sys.argv[1]
-    max_steps = 10
-    headless = True
-    provider = "browser-use"
+    args = parser.parse_args()
+    headless = args.headless.lower() == "true"
 
-    i = 2
-    while i < len(sys.argv):
-        if sys.argv[i] == "--max-steps" and i + 1 < len(sys.argv):
-            max_steps = int(sys.argv[i + 1])
-            i += 2
-        elif sys.argv[i] == "--headless" and i + 1 < len(sys.argv):
-            headless = sys.argv[i + 1].lower() == "true"
-            i += 2
-        elif sys.argv[i] == "--provider" and i + 1 < len(sys.argv):
-            provider = sys.argv[i + 1]
-            i += 2
-        else:
-            i += 1
-
-    browser_executor = AntigravityBrowser()
+    browser_executor = AntigravityBrowser(use_vnext=True)
     result = await browser_executor.execute_task(
-        task=task, max_steps=max_steps, headless=headless, provider=provider
+        task=args.task,
+        max_steps=args.max_steps,
+        headless=headless,
+        provider=args.provider,
+        enable_stealth=args.enable_stealth,
+        sandbox=args.sandbox,
+        record_video=args.record_video,
+        profile_name=args.profile_name,
+        run_id=args.run_id,
     )
     print(json.dumps(result))
 

@@ -170,6 +170,93 @@ async def websocket_endpoint(websocket: WebSocket, run_id: str):
         print(f"Client disconnected from WebSocket for {run_id}")
 
 
+# ============================================
+# FRACTIONAL TOOLS (For Node.js Orchestrator)
+# ============================================
+
+
+class NavigateRequest(BaseModel):
+    url: str
+
+
+class ClickRequest(BaseModel):
+    selector: str
+
+
+class FillRequest(BaseModel):
+    selector: str
+    value: str
+
+
+class ExtractRequest(BaseModel):
+    instruction: str
+
+
+class ScreenshotRequest(BaseModel):
+    label: Optional[str] = None
+
+
+# Global browser context for tools
+_browser_instance = None
+_context_instance = None
+_page_instance = None
+
+
+async def get_page():
+    global _browser_instance, _context_instance, _page_instance
+    if not _page_instance:
+        from playwright.async_api import async_playwright
+
+        pw = await async_playwright().start()
+        _browser_instance = await pw.chromium.launch(headless=True)
+        _context_instance = await _browser_instance.new_context()
+        _page_instance = await _context_instance.new_page()
+    return _page_instance
+
+
+@app.post("/navigate")
+async def navigate(request: NavigateRequest):
+    page = await get_page()
+    await page.goto(request.url)
+    return {"success": True, "url": page.url}
+
+
+@app.post("/click")
+async def click(request: ClickRequest):
+    page = await get_page()
+    # Try text match if not a selector
+    if not (request.selector.startswith(".") or request.selector.startswith("#")):
+        await page.click(f"text={request.selector}", timeout=5000)
+    else:
+        await page.click(request.selector, timeout=5000)
+    return {"success": True}
+
+
+@app.post("/fill")
+async def fill(request: FillRequest):
+    page = await get_page()
+    await page.fill(request.selector, request.value)
+    return {"success": True}
+
+
+@app.post("/extract")
+async def extract(request: ExtractRequest):
+    page = await get_page()
+    content = await page.content()
+    # In a real app, use an LLM here to extract specific info from content
+    # For now, return a snippet
+    return {"success": True, "data": content[:1000]}
+
+
+@app.post("/screenshot")
+async def screenshot(request: ScreenshotRequest):
+    page = await get_page()
+    path = f"screenshots/{request.label or 'current'}.png"
+    os.makedirs("screenshots", exist_ok=True)
+    await page.screenshot(path=path)
+    return {"success": True, "path": path}
+
+
 @app.get("/health")
 async def health():
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}

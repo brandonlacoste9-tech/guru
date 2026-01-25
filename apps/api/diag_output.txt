@@ -1,0 +1,7 @@
+Using project: floguru
+
+--- Testing DeepSeek ---
+
+--- Testing Vertex AI ---
+Γ¥î DeepSeek Error: Failed to deserialize the JSON body into the target type: missing field `messages` at line 1 column 97
+Γ¥î Vertex AI Error: This API method requires billing to be enabled. Please enable billing on project #floguru by visiting https://console.developers.google.com/billing/enable?project=floguru then retry. If you enabled billing for this project recently, wait a few minutes for the action to propagate to our systems and retry.

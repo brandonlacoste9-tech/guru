@@ -7,11 +7,34 @@ import ActiveGuruCard from '@/components/dashboard/ActiveGuruCard';
 import AutomationGrid from '@/components/dashboard/AutomationGrid';
 import StatsGrid from '@/components/dashboard/StatsGrid';
 import TeachingUI from '@/components/TeachingUI';
-import { LayoutDashboard, Scissors, Settings, LogOut, Bell, Search, User } from 'lucide-react';
+import Marketplace from '@/components/marketplace/Marketplace';
+import PushSubscriptionToggle from '@/components/dashboard/PushSubscriptionToggle';
+import { ExecutionHistoryFeed } from '@/components/dashboard/ExecutionHistoryFeed';
+import GuruRadar from '@/components/dashboard/GuruRadar';
+import { LayoutDashboard, Scissors, Settings, LogOut, Bell, Search, User, ShoppingBag } from 'lucide-react';
+
+import { useRouter } from 'next/navigation';
+import { useSupabase } from '@/components/SupabaseProvider';
 
 export default function DashboardPage() {
+    const { user, isLoading, signOut } = useSupabase();
     const [activeTab, setActiveTab] = useState('overview');
     const [showTeachingUI, setShowTeachingUI] = useState(false);
+    const router = useRouter();
+
+    React.useEffect(() => {
+        if (!isLoading && !user) {
+            router.push('/login');
+        }
+    }, [user, isLoading, router]);
+
+    if (isLoading || !user) {
+        return (
+            <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     // Mock active guru (usually from DB/profile)
     const activeGuru = GURUS.fitnessflow;
@@ -22,6 +45,25 @@ export default function DashboardPage() {
         // This would call AutomationService.execute() via the API
         alert(`Triggering Guru Skill: ${template.name}. The agent is starting the task...`);
     };
+
+    const mockRuns = [
+        {
+            id: 'mission-abc-123',
+            status: 'success' as const,
+            summary: "Successfully booked the 6:00 PM spinning class at 'The Foundry' for tomorrow. Confirmation email received.",
+            startedAt: "2023-10-25T16:00:00.000Z",
+            durationMs: 45000,
+            screenshots: ['/temp/mock-1.png', '/temp/mock-2.png']
+        },
+        {
+            id: 'mission-xyz-789',
+            status: 'failed' as const,
+            summary: "Failed to update Slack status. Error: Timeout during Slack OAuth handshake. Retrying in automated heal cycle...",
+            startedAt: "2023-10-24T09:30:00.000Z",
+            durationMs: 120000,
+            screenshots: []
+        }
+    ];
 
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30">
@@ -38,13 +80,17 @@ export default function DashboardPage() {
 
                 <nav className="flex-1 px-4 py-8 space-y-2">
                     <NavItem icon={LayoutDashboard} label="Dashboard" active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} />
-                    <NavItem icon={Scissors} label="Guru Skills" active={activeTab === 'skills'} onClick={() => setActiveTab('skills')} />
+                    <NavItem icon={Scissors} label="Guru Skills" onClick={() => router.push('/gurus')} />
+                    <NavItem icon={ShoppingBag} label="Marketplace" active={activeTab === 'marketplace'} onClick={() => setActiveTab('marketplace')} />
                     <NavItem icon={Bell} label="Notifications" badge="3" />
                     <NavItem icon={Settings} label="Settings" />
                 </nav>
 
                 <div className="p-4 border-t border-slate-800">
-                    <button className="flex items-center gap-3 w-full p-3 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-xl transition-all">
+                    <button
+                        onClick={() => signOut()}
+                        className="flex items-center gap-3 w-full p-3 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-xl transition-all"
+                    >
                         <LogOut className="w-5 h-5" />
                         <span className="hidden lg:block font-medium">Log Out</span>
                     </button>
@@ -65,102 +111,113 @@ export default function DashboardPage() {
 
                     <div className="flex items-center gap-6">
                         <div className="text-right hidden sm:block">
-                            <div className="text-sm font-bold text-white">Alex Rivers</div>
-                            <div className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Premium Member</div>
+                            <div className="text-sm font-bold text-white">{user.email?.split('@')[0] || 'Guru Member'}</div>
+                            <div className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Active Member</div>
                         </div>
                         <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 p-0.5 overflow-hidden">
-                            <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center">
-                                <User className="w-5 h-5 text-slate-500" />
+                            <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center font-bold text-blue-500 uppercase">
+                                {user.email?.[0] || <User className="w-5 h-5 text-slate-500" />}
                             </div>
                         </div>
                     </div>
                 </header>
 
                 <div className="max-w-7xl mx-auto px-8 space-y-12">
-                    {/* Hero Section */}
-                    <ActiveGuruCard guru={activeGuru} />
+                    <AnimatePresence mode="wait">
+                        {activeTab === 'marketplace' ? (
+                            <motion.div
+                                key="marketplace"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                            >
+                                <Marketplace />
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="dashboard"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                className="space-y-12"
+                            >
+                                {/* Hero Section */}
+                                <ActiveGuruCard guru={activeGuru} />
 
-                    {/* Grid Section */}
-                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
-                        <div className="xl:col-span-2 space-y-12">
-                            <StatsGrid />
+                                {/* Grid Section */}
+                                <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
+                                    <div className="xl:col-span-2 space-y-12">
+                                        <StatsGrid />
 
-                            <div className="bg-slate-900/30 rounded-3xl p-1 border border-slate-800 flex gap-1 mb-6">
-                                <button
-                                    onClick={() => setShowTeachingUI(false)}
-                                    className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all ${!showTeachingUI ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
-                                >
-                                    Automation Center
-                                </button>
-                                <button
-                                    onClick={() => setShowTeachingUI(true)}
-                                    className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all ${showTeachingUI ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
-                                >
-                                    Teach New Skill
-                                </button>
-                            </div>
+                                        <div className="bg-slate-900/30 rounded-3xl p-1 border border-slate-800 flex gap-1 mb-6">
+                                            <button
+                                                onClick={() => setShowTeachingUI(false)}
+                                                className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all ${!showTeachingUI ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                                            >
+                                                Automation Center
+                                            </button>
+                                            <button
+                                                onClick={() => setShowTeachingUI(true)}
+                                                className={`flex-1 py-3 rounded-2xl text-sm font-bold transition-all ${showTeachingUI ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}
+                                            >
+                                                Teach New Skill
+                                            </button>
+                                        </div>
 
-                            <AnimatePresence mode="wait">
-                                {showTeachingUI ? (
-                                    <motion.div
-                                        key="teaching"
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                    >
-                                        <TeachingUI />
-                                    </motion.div>
-                                ) : (
-                                    <motion.div
-                                        key="automation"
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                    >
-                                        <AutomationGrid templates={templates} onRun={handleRunAutomation} />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
+                                        <AnimatePresence mode="wait">
+                                            {showTeachingUI ? (
+                                                <motion.div
+                                                    key="teaching"
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                >
+                                                    <TeachingUI guruId={activeGuru.id} />
+                                                </motion.div>
+                                            ) : (
+                                                <motion.div
+                                                    key="automation"
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                >
+                                                    <AutomationGrid templates={templates} onRun={handleRunAutomation} />
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
 
-                        {/* Right Sidebar: Recent Activity / Community */}
-                        <div className="space-y-8">
-                            <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6">
-                                <h4 className="font-bold text-white mb-6">Recent Activity</h4>
-                                <div className="space-y-6">
-                                    <ActivityItem
-                                        title="Spinning Class Booked"
-                                        time="2h ago"
-                                        icon="🏋️"
-                                        status="success"
-                                    />
-                                    <ActivityItem
-                                        title="Inbox Zero Sprint"
-                                        time="5h ago"
-                                        icon="📧"
-                                        status="success"
-                                    />
-                                    <ActivityItem
-                                        title="Meditation Session"
-                                        time="Yesterday"
-                                        icon="🧘"
-                                        status="failed"
-                                        error="Timeout during Slack update"
-                                    />
+                                    {/* Right Sidebar: Recent Activity / Community */}
+                                    <div className="space-y-8">
+                                        <GuruRadar />
+
+                                        <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6">
+                                            <h4 className="font-bold text-white mb-6">Mission Intelligence</h4>
+                                            <ExecutionHistoryFeed runs={mockRuns} />
+                                        </div>
+
+                                        <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6">
+                                            <h4 className="font-bold text-white mb-6">Settings</h4>
+                                            <PushSubscriptionToggle />
+                                        </div>
+
+                                        <div className="bg-linear-to-br from-indigo-600 to-purple-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-500/20">
+                                            <h4 className="font-bold text-lg mb-2">Join the Community</h4>
+                                            <p className="text-sm text-indigo-100 mb-4 opacity-80">
+                                                Discover and install over 500+ automations created by other users.
+                                            </p>
+                                            <button
+                                                onClick={() => setActiveTab('marketplace')}
+                                                className="w-full bg-white text-indigo-600 font-bold py-3 rounded-2xl hover:bg-slate-100 transition-colors shadow-lg"
+                                            >
+                                                Explore Hub
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className="bg-linear-to-br from-indigo-600 to-purple-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-500/20">
-                                <h4 className="font-bold text-lg mb-2">Join the Community</h4>
-                                <p className="text-sm text-indigo-100 mb-4 opacity-80">
-                                    Discover and install over 500+ automations created by other users.
-                                </p>
-                                <button className="w-full bg-white text-indigo-600 font-bold py-3 rounded-2xl hover:bg-slate-100 transition-colors shadow-lg">
-                                    Explore Hub
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </main>
         </div>
@@ -195,25 +252,4 @@ function NavItem({ icon: Icon, label, active = false, badge, onClick }: NavItemP
     );
 }
 
-function ActivityItem({ title, time, icon, status, error }: any) {
-    return (
-        <div className="flex gap-4 group">
-            <div className="w-10 h-10 rounded-xl bg-slate-950 flex flex-shrink-0 items-center justify-center text-lg border border-slate-800 group-hover:border-slate-700 transition-colors">
-                {icon}
-            </div>
-            <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-0.5">
-                    <h5 className="text-sm font-bold text-slate-200 truncate">{title}</h5>
-                    <span className="text-[10px] text-slate-500 font-medium">{time}</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                    <div className={`w-1.5 h-1.5 rounded-full ${status === 'success' ? 'bg-green-500' : 'bg-red-500'}`} />
-                    <span className="text-[10px] uppercase tracking-widest font-black text-slate-600">
-                        {status}
-                    </span>
-                    {error && <span className="text-[10px] text-red-400/60 ml-2 italic group-hover:text-red-400 transition-colors truncate">"{error}"</span>}
-                </div>
-            </div>
-        </div>
-    );
-}
+

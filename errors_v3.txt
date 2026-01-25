@@ -1,0 +1,21 @@
+apps/api/src/services/aiService.ts(130,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ url }: { url: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(142,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ selector }: { selector: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(155,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ selector, value, }: { selector: string; value: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(174,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ instruction }: { instruction: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(186,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ label }: { label?: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(218,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ finding, category, }: { finding: string; category?: string; }) => Promise<{ success: boolean; message: string; }>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(238,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ updatedPlan }: { updatedPlan: string; }) => Promise<{ success: boolean; message: string; }>' is not assignable to type 'undefined'.

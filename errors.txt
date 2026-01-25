@@ -1,0 +1,39 @@
+apps/api/src/routes/copilotRoutes.ts(16,36): error TS2339: Property 'expressHandler' does not exist on type 'CopilotRuntime<[]>'.
+apps/api/src/routes/guruRoutes.ts(16,61): error TS2339: Property 'user' does not exist on type 'Request<{}, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/guruRoutes.ts(25,51): error TS2339: Property 'user' does not exist on type 'Request<{}, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/guruRoutes.ts(34,63): error TS2339: Property 'user' does not exist on type 'Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/guruRoutes.ts(45,11): error TS2339: Property 'user' does not exist on type 'Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/guruRoutes.ts(56,53): error TS2339: Property 'user' does not exist on type 'Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/marketplaceRoutes.ts(23,78): error TS2339: Property 'user' does not exist on type 'Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/marketplaceRoutes.ts(32,73): error TS2339: Property 'user' does not exist on type 'Request<{}, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/notificationRoutes.ts(29,19): error TS2339: Property 'user' does not exist on type 'Request<{}, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/routes/notificationRoutes.ts(48,44): error TS2339: Property 'user' does not exist on type 'Request<{}, any, any, ParsedQs, Record<string, any>>'.
+apps/api/src/services/aiService.ts(24,9): error TS2322: Type '(url: string, options?: any) => Promise<Response>' is not assignable to type '{ (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>; (input: string | URL | Request, init?: RequestInit | undefined): Promise<...>; }'.
+  Types of parameters 'url' and 'input' are incompatible.
+    Type 'URL | RequestInfo' is not assignable to type 'string'.
+      Type 'URL' is not assignable to type 'string'.
+apps/api/src/services/aiService.ts(60,9): error TS2322: Type '{ save_finding?: undefined; update_task_plan?: undefined; navigate: Tool<{ url: string; }, any>; click: Tool<{ selector: string; }, any>; fill: Tool<{ selector: string; value: string; }, any>; extract: Tool<...>; screenshot: Tool<...>; } | { ...; }' is not assignable to type 'ToolSet | undefined'.
+  Type '{ save_finding?: undefined; update_task_plan?: undefined; navigate: Tool<{ url: string; }, any>; click: Tool<{ selector: string; }, any>; fill: Tool<{ selector: string; value: string; }, any>; extract: Tool<...>; screenshot: Tool<...>; }' is not assignable to type 'ToolSet'.
+    Property 'save_finding' is incompatible with index signature.
+      Type 'undefined' is not assignable to type '(Tool<never, never> | Tool<any, any> | Tool<any, never> | Tool<never, any>) & Pick<Tool<any, any>, "execute" | "onInputAvailable" | "onInputStart" | "onInputDelta" | "needsApproval">'.
+apps/api/src/services/aiService.ts(127,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ url }: { url: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(139,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ selector }: { selector: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(152,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ selector, value, }: { selector: string; value: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(171,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ instruction }: { instruction: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(183,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ label }: { label?: string; }) => Promise<any>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(215,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ finding, category, }: { finding: string; category?: string; }) => Promise<{ success: boolean; message: string; }>' is not assignable to type 'undefined'.
+apps/api/src/services/aiService.ts(235,9): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ updatedPlan }: { updatedPlan: string; }) => Promise<{ success: boolean; message: string; }>' is not assignable to type 'undefined'.

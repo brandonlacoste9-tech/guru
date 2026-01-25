@@ -1,0 +1,34 @@
+name: Architect Deploy & Monitor
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours (24/7 Architect Monitoring)
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build GURU Stack
+        run: pnpm build
+
+      - name: 🛠️ Architect Health Check
+        run: |
+          echo "Architect is running diagnostics..."
+          # Future: Connect to Python Architect Agent here
+          echo "✅ Dependencies: OK"
+          echo "✅ Build: OK"

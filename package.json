@@ -10,6 +10,18 @@
     "url": "https://github.com/brandonlacoste9-tech/guru.git"
   },
   "workspaces": [
+    "clawdbot",
+    "browser-use",
+    "planning-with-files",
+    "antigravity-awesome-skills",
+    "antigravity-manager",
+    "ui-ux-pro-max",
+    "copilotkit",
+    "workspace-template",
+    "cherry-studio",
+    "animate-css",
+    "cline",
+    "guru-gateway",
     "apps/*",
     "packages/*"
   ],
@@ -27,6 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "drizzle-kit": "^0.20.0",
     "prettier": "^3.2.0",
     "turbo": "^2.0.0",
     "typescript": "^5.3.0"
@@ -34,5 +47,8 @@
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "cron": "^4.4.0"
   }
 }

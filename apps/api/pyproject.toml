@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "floguru-browser-bridge"
+version = "0.1.0"
+description = "Direct Python bridge for browser-use automation"
+authors = [
+    { name = "FloGuru Team", email = "engineering@floguru.ai" }
+]
+dependencies = [
+    "browser-use>=0.1.0",
+    "langchain-openai",
+    "langchain-google-genai",
+    "python-dotenv",
+    "playwright"
+]
+requires-python = ">=3.10"
+
+[project.scripts]
+browser-agent = "antigravity_browser:main"

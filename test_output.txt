@@ -1,0 +1,25 @@
+Testing AIService with DeepSeek...
+≡ƒñû Guru test-guru is reasoning...
+[DeepSeek SDK] Fetching: https://api.deepseek.com/responses
+[DeepSeek] Request Headers Keys: [ 'authorization', 'content-type', 'user-agent' ]
+[DeepSeek] Request: {
+  url: 'https://api.deepseek.com/v1/chat/completions',
+  originalUrl: 'https://api.deepseek.com/responses',
+  method: 'POST',
+  headers: {
+    authorization: '[REDACTED]',
+    'content-type': 'application/json',
+    'user-agent': 'ai/6.0.48 ai-sdk/provider-utils/4.0.9 runtime/node.js/24'
+  },
+  bodyPreview: {
+    model: 'deepseek-chat',
+    messageCount: 2,
+    toolCount: 7,
+    hasTools: true
+  }
+}
+[DeepSeek] Response: { status: 200, statusText: 'OK', ok: true }
+ΓÜá∩╕Å DeepSeek failed! [test-guru] Invalid JSON response
+Full error logged to ai_error.log
+≡ƒÆÇ All LLM providers failed. API keys are not supported by this API. Expected OAuth2 access token or other authentication credentials that assert a principal. See https://cloud.google.com/docs/authentication
+Critical Failure: AI Execution failed: API keys are not supported by this API. Expected OAuth2 access token or other authentication credentials that assert a principal. See https://cloud.google.com/docs/authentication

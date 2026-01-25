@@ -1,0 +1,6 @@
+
+--- Testing DeepSeek ---
+Γ¥î DeepSeek Error: Failed to deserialize the JSON body into the target type: missing field `messages` at line 1 column 97
+
+--- Testing Google AI ---
+Γ¥î Google AI Error: models/gemini-1.5-flash-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.

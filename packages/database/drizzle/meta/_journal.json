@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1769096496625,
+      "tag": "0000_breezy_stature",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1769115106052,
+      "tag": "0001_regular_rattler",
+      "breakpoints": true
+    }
+  ]
+}

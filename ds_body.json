@@ -1,0 +1,100 @@
+{
+  "model": "deepseek-chat",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant."
+    },
+    {
+      "role": "user",
+      "content": "What is 2+2?"
+    }
+  ],
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "navigate",
+        "description": "Navigate to a specific URL",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "click",
+        "description": "Click on an element using a CSS selector or text",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "fill",
+        "description": "Fill an input field with text",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "extract",
+        "description": "Extract text or data from the current page",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "screenshot",
+        "description": "Take a screenshot of the current page state",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "save_finding",
+        "description": "Save a key finding or piece of data to permanent memory.",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "update_task_plan",
+        "description": "Update the current task plan or roadmap for this Guru.",
+        "parameters": {
+          "properties": {},
+          "additionalProperties": false,
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "tool_choice": "auto"
+}

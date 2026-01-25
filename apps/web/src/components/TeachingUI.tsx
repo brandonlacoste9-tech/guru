@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Square, Save, RotateCcw, Activity, Terminal, CheckCircle2, AlertCircle } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useCopilotAction } from "@copilotkit/react-core";
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -12,41 +13,55 @@ function cn(...inputs: ClassValue[]) {
 
 interface Step {
     id: string;
-    type: 'click' | 'input' | 'navigate' | 'wait';
-    target?: string;
+    action: 'click' | 'input' | 'navigate' | 'wait' | 'type'; // Added 'type' as action
+    selector?: string; // Changed from target
     value?: string;
     timestamp: string;
 }
 
-export default function TeachingUI() {
+interface TeachingUIProps {
+    guruId?: string;
+}
+
+export default function TeachingUI({ guruId }: TeachingUIProps) {
     const [isRecording, setIsRecording] = useState(false);
     const [steps, setSteps] = useState<Step[]>([]);
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
     const [currentUrl, setCurrentUrl] = useState('');
     const [status, setStatus] = useState<'idle' | 'recording' | 'preview' | 'saving'>('idle');
+    const [error, setError] = useState<string | null>(null);
 
-    // Mock recording effect
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isRecording) {
-            interval = setInterval(() => {
-                const mockSteps: Step[] = [
-                    { id: Math.random().toString(), type: 'navigate', value: 'https://app.gympass.com', timestamp: new Date().toISOString() },
-                    { id: Math.random().toString(), type: 'click', target: '#login-button', timestamp: new Date().toISOString() },
-                    { id: Math.random().toString(), type: 'input', target: 'input[name="email"]', value: 'user@example.com', timestamp: new Date().toISOString() },
-                ];
-                if (steps.length < 5) {
-                    setSteps(prev => [...prev, mockSteps[prev.length] || mockSteps[0]]);
-                }
-            }, 2000);
+    useCopilotAction({
+        name: "addStep",
+        description: "Add a new browser automation step to the list",
+        parameters: [
+            { name: "action", type: "string", description: "Action type (click, type, navigate, wait)", required: true },
+            { name: "selector", type: "string", description: "CSS selector" },
+            { name: "value", type: "string", description: "Input value or URL" }
+        ],
+        handler: async ({ action, selector, value }) => {
+            // Validate action type
+            // Validate action type
+            const ALL_ACTIONS = ['click', 'input', 'navigate', 'wait', 'type'] as const;
+            const validAction = ALL_ACTIONS.includes(action as typeof ALL_ACTIONS[number])
+                ? (action as Step['action'])
+                : 'wait';
+
+            setSteps(prev => [...prev, {
+                id: Date.now().toString(),
+                action: validAction,
+                selector,
+                value,
+                timestamp: new Date().toLocaleTimeString()
+            }]);
+            return "Step added";
         }
-        return () => clearInterval(interval);
-    }, [isRecording, steps.length]);
+    });
 
     const startRecording = () => {
         setIsRecording(true);
         setStatus('recording');
+        setError(null);
         setSteps([]);
     };
 
@@ -55,14 +70,49 @@ export default function TeachingUI() {
         setStatus('preview');
     };
 
-    const handleSave = () => {
-        setStatus('saving');
-        // Simulate API call
-        setTimeout(() => {
+    const validateForm = () => {
+        if (!name.trim()) return "Automation name is required";
+        if (!currentUrl.trim()) return "Starting URL is required";
+        if (steps.length === 0) return "Record at least one step";
+        return null;
+    };
+
+    const handleSave = async () => {
+        const validationError = validateForm();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        try {
+            setStatus('saving');
+            setError(null);
+
+            const response = await fetch("http://localhost:4000/api/guru-automations", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name,
+                    taskDescription: `Automation for ${name}`,
+                    steps,
+                    startingUrl: currentUrl,
+                    guruId,
+                }),
+            });
+
+            if (!response.ok) throw new Error("Failed to save automation");
+
             setStatus('idle');
             setName('');
+            setCurrentUrl('');
             setSteps([]);
-        }, 2000);
+            alert("Guru Automation Saved!");
+        } catch (err: unknown) {
+            console.error(err);
+            const message = err instanceof Error ? err.message : "Failed to save";
+            setError(message);
+            setStatus('preview');
+        }
     };
 
     return (
@@ -110,6 +160,13 @@ export default function TeachingUI() {
                     )}
                 </div>
             </div>
+
+            {error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl flex items-center gap-2">
+                    <AlertCircle className="w-5 h-5 text-red-400" />
+                    {error}
+                </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Sidebar: Details */}
@@ -203,19 +260,19 @@ export default function TeachingUI() {
                                             <div className="flex-1 space-y-1">
                                                 <div className="flex items-center justify-between">
                                                     <span className="font-semibold text-slate-200 uppercase text-[10px] tracking-wider bg-slate-800 px-2 py-0.5 rounded leading-none">
-                                                        {step.type}
+                                                        {step.action}
                                                     </span>
                                                     <span className="text-[10px] text-slate-600">
-                                                        {new Date(step.timestamp).toLocaleTimeString()}
+                                                        {step.timestamp}
                                                     </span>
                                                 </div>
                                                 <p className="text-sm text-slate-400">
-                                                    {step.type === 'navigate' ? (
+                                                    {step.action === 'navigate' ? (
                                                         <>Navigated to <span className="text-blue-400 break-all">{step.value}</span></>
-                                                    ) : step.type === 'click' ? (
-                                                        <>Clicked element <code className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-pink-400 text-xs">{step.target}</code></>
+                                                    ) : step.action === 'click' ? (
+                                                        <>Clicked element <code className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-pink-400 text-xs">{step.selector}</code></>
                                                     ) : (
-                                                        <>Typed <span className="text-green-400">"{step.value}"</span> into <code className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-pink-400 text-xs">{step.target}</code></>
+                                                        <>Typed <span className="text-green-400">"{step.value}"</span> into <code className="bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 text-pink-400 text-xs">{step.selector}</code></>
                                                     )}
                                                 </p>
                                             </div>
