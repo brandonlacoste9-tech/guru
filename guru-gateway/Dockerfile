@@ -19,7 +19,7 @@ COPY . /app
 
 # 3. Install Node dependencies
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 # 4. Install Python dependencies for Browser Use
 RUN pip3 install --no-cache-dir ./browser-use --break-system-packages
@@ -28,7 +28,7 @@ RUN playwright install-deps chromium
 
 # 5. Build Gateway
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm-store-build,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm --filter guru-gateway run build
 
 # 6. Final Image
