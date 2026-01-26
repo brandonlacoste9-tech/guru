@@ -49,15 +49,15 @@ export class GuruExecutorService {
       },
     });
 
-    try {
-      // 0. Initialize Skill Mounting
-      const skillMounting = new SkillMounting({
-        // TODO: Move paths to config
-        sourceRoot: path.join(process.cwd(), "../../awesome-skills"),
-        mountRoot: path.join(process.cwd(), "skills/mounted_skills"),
-      });
-      const mountedSkillIds: string[] = [];
+    // 0. Initialize Skill Mounting (before try block for finally access)
+    const skillMounting = new SkillMounting({
+      // TODO: Move paths to config
+      sourceRoot: path.join(process.cwd(), "../../awesome-skills"),
+      mountRoot: path.join(process.cwd(), "skills/mounted_skills"),
+    });
+    const mountedSkillIds: string[] = [];
 
+    try {
       // 1. Fetch Guru
       const [guru] = await db.select().from(gurus).where(eq(gurus.id, guruId));
       if (!guru) throw new Error(`Guru (${guruId}) not found.`);
