@@ -43,6 +43,7 @@ FROM base
 COPY --from=prod-deps /app /app
 
 # Explicitly copy browser-use folder again to be absolutely sure it exists
+# Cache bust: 2026-01-26-02
 COPY ./browser-use /app/browser-use
 # Debug: List files to verify copy success
 RUN ls -R /app/browser-use
