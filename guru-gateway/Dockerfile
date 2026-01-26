@@ -42,6 +42,9 @@ FROM base
 # Copy entire app directory from prod-deps to ensure we have all node_modules (root & package level)
 COPY --from=prod-deps /app /app
 
+# Explicitly copy browser-use folder again to be absolutely sure it exists
+COPY ./browser-use /app/browser-use
+
 # Overwrite with compiled assets
 COPY --from=build /app/guru-gateway/dist /app/guru-gateway/dist
 
