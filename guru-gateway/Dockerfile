@@ -50,5 +50,6 @@ ENV BROWSER_USE_LOG_LEVEL=info
 EXPOSE 18789
 
 # Run from the gateway directory so paths align
-WORKDIR /app/guru-gateway
-CMD [ "pnpm", "start" ]
+# Run from the root so we can access everything if needed, but run the built JS directly
+WORKDIR /app
+CMD [ "node", "guru-gateway/dist/index.js" ]
