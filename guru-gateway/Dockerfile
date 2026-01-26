@@ -24,7 +24,8 @@ COPY . /app
 RUN pnpm install --prod --no-frozen-lockfile
 
 # 4. Install Python dependencies for Browser Use
-RUN pip3 install --no-cache-dir ./browser-use --break-system-packages
+# Since we absorbed the submodule, browser-use is just a folder at /app/browser-use
+RUN pip3 install --no-cache-dir /app/browser-use --break-system-packages
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
