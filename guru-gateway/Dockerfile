@@ -39,7 +39,10 @@ RUN pnpm --filter guru-gateway run build
 
 # 6. Final Image
 FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
+# Copy entire app directory from prod-deps to ensure we have all node_modules (root & package level)
+COPY --from=prod-deps /app /app
+
+# Overwrite with compiled assets
 COPY --from=build /app/guru-gateway/dist /app/guru-gateway/dist
 
 # Env vars for Python
