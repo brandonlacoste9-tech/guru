@@ -50,5 +50,10 @@
   },
   "dependencies": {
     "cron": "^4.4.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "^0.19.12"
+    }
   }
 }
