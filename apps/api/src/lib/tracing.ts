@@ -1,7 +1,10 @@
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
-import { Resource } from "@opentelemetry/resources";
-import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
+import type { Resource } from "@opentelemetry/resources";
+import {
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
+} from "@opentelemetry/semantic-conventions";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
 import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
 import { ExpressInstrumentation } from "@opentelemetry/instrumentation-express";
@@ -35,11 +38,13 @@ export const initTracing = () => {
   });
 
   sdk = new NodeSDK({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: "guru-api",
-      [SemanticResourceAttributes.SERVICE_VERSION]: "1.0.0",
-      "arize.space_id": arizeSpaceId,
-    }),
+    resource: {
+      attributes: {
+        [ATTR_SERVICE_NAME]: "guru-api",
+        [ATTR_SERVICE_VERSION]: "1.0.0",
+        "arize.space_id": arizeSpaceId,
+      },
+    } as Resource,
     spanProcessor: new BatchSpanProcessor(exporter),
     instrumentations: [
       new HttpInstrumentation(),
