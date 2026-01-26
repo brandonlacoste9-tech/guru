@@ -70,11 +70,15 @@ class ChannelAdapter {
   }
 
   async send(channel: Channel, to: string, text: string) {
-    if (channel === "telegram")
-      await this.telegram.api.sendMessage(to, { text });
-    else if (channel === "discord") {
+    if (channel === "telegram") {
+      // @ts-ignore: grammy types can be strict
+      await this.telegram.api.sendMessage(to, text);
+    } else if (channel === "discord") {
       const c = await this.discord.channels.fetch(to);
-      if (c?.isTextBased()) await c.send(text);
+      // Type narrowing: ensure it's a text-based channel that has .send
+      if (c && c.isTextBased()) {
+        await c.send(text);
+      }
     }
     // WhatsApp is already handled by the original Clawdbot CLI
   }
