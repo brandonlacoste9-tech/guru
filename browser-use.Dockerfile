@@ -11,12 +11,10 @@ RUN apt-get update && apt-get install -y \
 # 2. Copy source code
 COPY . .
 
-# 3. Install Python dependencies (including browser-use itself)
-# We install from current directory to get the library code
-RUN pip install --no-cache-dir .
+# 3. Install Python dependencies (from subdirectory)
+RUN pip install --no-cache-dir ./browser-use
 
 # 4. Install Playwright Browsers (Chromium only to save space/time)
-# The 'playwright' command becomes available after pip install
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
@@ -25,4 +23,4 @@ ENV HEADLESS=true
 ENV BROWSER_USE_LOG_LEVEL=info
 
 # 6. Run the Agent Bridge
-CMD ["python", "-u", "python_bridge/browser_use_agent.py"]
+CMD ["python", "-u", "browser-use/python_bridge/browser_use_agent.py"]
