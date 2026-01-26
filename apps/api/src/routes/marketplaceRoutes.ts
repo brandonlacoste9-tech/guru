@@ -1,14 +1,10 @@
 import { Router } from "express";
 import { guruService } from "../services/guruService";
+import { requireAuth } from "../middleware/requireAuth";
 
 const router = Router();
 
-// Mock auth
-const authenticate = (req: any, res: any, next: any) => {
-  req.user = { id: "00000000-0000-0000-0000-000000000000" };
-  next();
-};
-
+// Public route - list templates
 router.get("/templates", async (req, res) => {
   try {
     const templates = await guruService.listGuruTemplates(req.query);
@@ -18,7 +14,7 @@ router.get("/templates", async (req, res) => {
   }
 });
 
-router.post("/templates/:id/use", authenticate, async (req, res) => {
+router.post("/templates/:id/use", requireAuth, async (req, res) => {
   try {
     const guru = await guruService.createGuruFromTemplate(
       req.params.id,
@@ -31,7 +27,7 @@ router.post("/templates/:id/use", authenticate, async (req, res) => {
   }
 });
 
-router.post("/templates", authenticate, async (req, res) => {
+router.post("/templates", requireAuth, async (req, res) => {
   try {
     const template = await guruService.createGuruTemplate(
       req.body,

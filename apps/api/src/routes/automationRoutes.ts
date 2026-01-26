@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { automationService } from "../services/automationService";
+import { requireAuth } from "../middleware/requireAuth";
 
 const router = Router();
+
+// Apply authentication to all automation routes
+router.use(requireAuth);
 
 // Run an automation
 router.post("/run", async (req, res) => {

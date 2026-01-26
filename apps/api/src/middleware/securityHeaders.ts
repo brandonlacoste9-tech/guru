@@ -2,19 +2,21 @@ import helmet from "helmet";
 import { Request, Response, NextFunction } from "express";
 
 /**
- * Helmet configuration for standard production security:
- * - CSP (strict)
+ * Helmet configuration for production security:
+ * - CSP (strict - no unsafe-inline)
  * - HSTS (maxAge 180 days)
  * - X-Frame-Options (DENY)
  * - Referrer-Policy
  * - X-Content-Type-Options (nosniff)
+ *
+ * Note: If you need inline scripts/styles, use nonces or hashes instead of unsafe-inline
  */
 export const securityHeaders = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:"],
       connectSrc: [
         "'self'",

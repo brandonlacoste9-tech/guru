@@ -2,7 +2,10 @@ const OpenAI = require("openai");
 require('dotenv').config({ path: '../../.env' });
 
 async function testGemini() {
-  const key = process.env.GOOGLE_AI_API_KEY || "AIzaSyB-hDKikTZ7VJIJljtB2YapuM0NO0pALMU";
+  const key = process.env.GOOGLE_AI_API_KEY;
+  if (!key) {
+    throw new Error('GOOGLE_AI_API_KEY environment variable is required');
+  }
   console.log('Testing with OpenAI Shim & Key:', key.substring(0, 5) + '...');
   
   const client = new OpenAI({

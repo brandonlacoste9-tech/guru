@@ -10,6 +10,7 @@ import { createServer } from "http";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import rateLimit from "express-rate-limit";
 import automationRoutes from "./routes/automationRoutes";
 import chaosRoutes from "./routes/chaosRoutes";
 import guruRoutes from "./routes/guruRoutes";
@@ -34,10 +35,20 @@ const httpServer = createServer(app);
 // Initialize WebSockets
 SocketService.init(httpServer);
 
+// Rate limiting for API routes
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Too many requests from this IP, please try again later.",
+});
+
 app.use(useSecurityHeaders); // Use our custom security configuration
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use("/api/", apiLimiter); // Apply rate limiting to all API routes
 app.use("/temp", express.static(path.join(__dirname, "../temp")));
 
 // Routes

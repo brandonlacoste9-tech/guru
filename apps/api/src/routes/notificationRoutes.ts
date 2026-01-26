@@ -2,20 +2,16 @@ import { Router } from "express";
 import { db } from "@guru/database";
 import { pushSubscriptions } from "@guru/database/src/schema";
 import { eq, and } from "drizzle-orm";
+import { requireAuth } from "../middleware/requireAuth";
 
 const router = Router();
 
-// Mock auth
-const authenticate = (req: any, res: any, next: any) => {
-  req.user = { id: "00000000-0000-0000-0000-000000000000" };
-  next();
-};
-
+// Public endpoint for VAPID key
 router.get("/vapid-key", (req, res) => {
   res.json({ publicKey: process.env.VAPID_PUBLIC_KEY });
 });
 
-router.post("/subscribe", authenticate, async (req, res) => {
+router.post("/subscribe", requireAuth, async (req, res) => {
   try {
     const { endpoint, keys } = req.body;
 
@@ -37,7 +33,7 @@ router.post("/subscribe", authenticate, async (req, res) => {
   }
 });
 
-router.post("/unsubscribe", authenticate, async (req, res) => {
+router.post("/unsubscribe", requireAuth, async (req, res) => {
   try {
     const { endpoint } = req.body;
     await db

@@ -1,8 +1,13 @@
 import crypto from 'crypto';
 
 const ALGORITHM = 'aes-256-gcm';
-// Using a default for now if env is not set, but user provided a specific key logic
-const KEY_HEX = process.env.ENCRYPTION_KEY || process.env.ENCRYPTION_SECRET || '4f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6';
+
+// Require encryption key from environment - no defaults for security
+const KEY_HEX = process.env.ENCRYPTION_KEY || process.env.ENCRYPTION_SECRET;
+if (!KEY_HEX) {
+  throw new Error('ENCRYPTION_KEY or ENCRYPTION_SECRET environment variable is required for secure encryption');
+}
+
 const KEY = Buffer.from(KEY_HEX, 'hex');
 
 export class EncryptionService {

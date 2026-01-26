@@ -332,7 +332,7 @@ export class AIService {
           .optional()
           .describe("Arguments to pass to the script"),
       }),
-      execute: async ({ skillName, scriptName, args = [] }) => {
+      execute: async ({ skillName, scriptName, args = [] }: { skillName: string; scriptName: string; args?: string[] }) => {
         if (!allowedSkills.includes(skillName)) {
           return {
             error: `Permission denied: Skill '${skillName}' is not in your domain-specific toolset.`,

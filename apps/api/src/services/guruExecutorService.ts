@@ -121,9 +121,10 @@ export class GuruExecutorService {
 
       // --- SKILL MOUNTING START ---
       const expertTools = skillRouter.getToolsForGuru(guru.id);
-      const skillsToMount = expertTools
-        .filter((t) => t.type === "expert_skill")
-        .map((t) => t.id);
+      // expertTools is an array of skill names (strings), filter out non-expert ones if needed
+      const skillsToMount = expertTools.filter((skillName) =>
+        skillName.startsWith("expert_") || !skillName.startsWith("browse_")
+      );
 
       let mountedContext = "";
 
@@ -210,15 +211,18 @@ export class GuruExecutorService {
 
       // --- Meta-Learning Reporting ---
       const usedExpertSkills = new Set<string>();
-      executionResult.toolCalls?.forEach((tc: any) => {
-        if (
-          tc.toolName === "lookup_expert_skill" ||
-          tc.toolName === "execute_skill_script"
-        ) {
-          const skillName = tc.args.skillName;
-          if (skillName) usedExpertSkills.add(skillName);
-        }
-      });
+      // executionResult may contain tool call info in data
+      if (executionResult.data?.toolCalls) {
+        executionResult.data.toolCalls.forEach((tc: any) => {
+          if (
+            tc.toolName === "lookup_expert_skill" ||
+            tc.toolName === "execute_skill_script"
+          ) {
+            const skillName = tc.args.skillName;
+            if (skillName) usedExpertSkills.add(skillName);
+          }
+        });
+      }
 
       const durationMs = Date.now() - startTime.getTime();
 

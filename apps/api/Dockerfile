@@ -15,14 +15,19 @@ WORKDIR /app
 # 2. Copy Monorepo Context
 COPY . /app
 
-# 3. Install Dependencies
-# This will respect .npmrc (shamefully-hoist) and package.json (overrides)
-RUN pnpm install --no-frozen-lockfile
+# 3. Install Dependencies (frozen lockfile for production)
+RUN pnpm install --frozen-lockfile
 
 # 4. Build API
 RUN pnpm --filter @guru/api run build
 
-# 5. Runtime
+# 5. Security: Create non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nodeuser && \
+    chown -R nodeuser:nodejs /app
+
+# 6. Runtime
+USER nodeuser
 WORKDIR /app/apps/api
 EXPOSE 4000
 CMD ["node", "dist/index.js"]
