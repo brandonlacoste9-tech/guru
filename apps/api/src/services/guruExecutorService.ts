@@ -18,9 +18,9 @@ import { getTracer } from "../lib/tracing";
 import { SpanStatusCode } from "@opentelemetry/api";
 import { skillRouter } from "../lib/skillRouter";
 import { metaLearningService } from "./metaLearningService";
+import { missionRunService } from "./missionRunService";
 
 const tracer = getTracer("guru-executor-service");
-import path from "path"; // Re-ensuring import
 import { SkillMounting } from "./cognition/SkillMounting";
 
 export class GuruExecutorService {
