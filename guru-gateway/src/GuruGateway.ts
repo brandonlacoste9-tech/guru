@@ -76,7 +76,8 @@ class ChannelAdapter {
     } else if (channel === "discord") {
       const c = await this.discord.channels.fetch(to);
       // Type narrowing: ensure it's a text-based channel that has .send
-      if (c && c.isTextBased()) {
+      if (c && c.isTextBased() && "send" in c) {
+        // @ts-ignore: safe due to runtime check above
         await c.send(text);
       }
     }
