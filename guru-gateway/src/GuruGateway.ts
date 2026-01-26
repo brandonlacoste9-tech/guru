@@ -15,8 +15,7 @@ class BrowserUseBridge extends EventEmitter {
   constructor() {
     super();
     const pyPath = path.resolve(
-      __dirname,
-      "../../browser-use/python_bridge/browser_use_agent.py",
+      "/app/browser-use/python_bridge/browser_use_agent.py",
     );
     // In Docker, the path is relative to WORKDIR /app/guru-gateway
     // So ../../browser-use resolves to /app/browser-use
