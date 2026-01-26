@@ -48,6 +48,9 @@ COPY ./browser-use /app/browser-use
 # Debug: List files to verify copy success
 RUN ls -R /app/browser-use
 
+# Re-install Python dependencies in the final stage because site-packages weren't copied
+RUN pip3 install --no-cache-dir browser-use playwright --break-system-packages
+
 # Overwrite with compiled assets
 COPY --from=build /app/guru-gateway/dist /app/guru-gateway/dist
 
