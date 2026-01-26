@@ -54,6 +54,7 @@ COPY --from=build /app/guru-gateway/dist /app/guru-gateway/dist
 # Env vars for Python
 ENV HEADLESS=true
 ENV BROWSER_USE_LOG_LEVEL=info
+ENV PYTHONPATH="/app/browser-use:$PYTHONPATH"
 
 # Expose Gateway Port
 EXPOSE 18789
