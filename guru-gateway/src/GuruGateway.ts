@@ -20,6 +20,7 @@ class BrowserUseBridge extends EventEmitter {
     );
     // In Docker, the path is relative to WORKDIR /app/guru-gateway
     // So ../../browser-use resolves to /app/browser-use
+    console.log("Resolved Python Bridge Path:", pyPath);
     this.proc = spawn("python3", [pyPath]);
 
     this.proc.stdout.on("data", (data) => {
@@ -54,7 +55,7 @@ type Channel = "telegram" | "whatsapp" | "discord";
 
 class ChannelAdapter {
   // Telegram
-  telegram = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN!);
+  telegram: TelegramBot | null = null;
   // Discord
   discord = new DiscordClient({
     intents: [
@@ -65,14 +66,28 @@ class ChannelAdapter {
   });
 
   constructor() {
-    this.telegram.start(); // listens instantly
-    this.discord.login(process.env.DISCORD_BOT_TOKEN);
+    if (process.env.TELEGRAM_BOT_TOKEN) {
+      this.telegram = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
+      this.telegram.start(); // listens instantly
+    } else {
+      console.warn("⚠️ TELEGRAM_BOT_TOKEN missing. Telegram bot disabled.");
+    }
+
+    if (process.env.DISCORD_BOT_TOKEN) {
+      this.discord.login(process.env.DISCORD_BOT_TOKEN);
+    } else {
+      console.warn("⚠️ DISCORD_BOT_TOKEN missing. Discord bot disabled.");
+    }
   }
 
   async send(channel: Channel, to: string, text: string) {
     if (channel === "telegram") {
-      // @ts-ignore: grammy types can be strict
-      await this.telegram.api.sendMessage(to, text);
+      if (this.telegram) {
+        // @ts-ignore: grammy types can be strict
+        await this.telegram.api.sendMessage(to, text);
+      } else {
+        console.warn("Cannot send to Telegram: Bot not initialized.");
+      }
     } else if (channel === "discord") {
       const c = await this.discord.channels.fetch(to);
       // Type narrowing: ensure it's a text-based channel that has .send
