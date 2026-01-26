@@ -26,8 +26,8 @@ RUN pnpm install --prod --no-frozen-lockfile
 # 4. Install Python dependencies for Browser Use
 # Install from PyPI instead of local source to avoid build issues
 RUN pip3 install --no-cache-dir browser-use --break-system-packages
-RUN playwright install chromium
-RUN playwright install-deps chromium
+RUN python3 -m playwright install chromium
+RUN python3 -m playwright install-deps chromium
 
 # 5. Build Gateway
 FROM base AS build
