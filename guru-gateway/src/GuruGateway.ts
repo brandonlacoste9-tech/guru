@@ -18,7 +18,9 @@ class BrowserUseBridge extends EventEmitter {
       __dirname,
       "../../browser-use/python_bridge/browser_use_agent.py",
     );
-    this.proc = spawn("python", [pyPath]);
+    // In Docker, the path is relative to WORKDIR /app/guru-gateway
+    // So ../../browser-use resolves to /app/browser-use
+    this.proc = spawn("python3", [pyPath]);
 
     this.proc.stdout.on("data", (data) => {
       const lines = data.toString().trim().split("\n");
