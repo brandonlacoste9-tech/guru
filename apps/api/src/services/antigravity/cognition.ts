@@ -647,10 +647,7 @@ export class AntigravityCognitiveEngine {
 
     // Dynamic Calibration: After a few stats have accumulated, adjust thresholds
     if (archetypeStats[entry.archetype].count % 5 === 0) {
-      await thresholdOptimizer.adjustThresholds(
-        archetypeStats,
-        task.personality,
-      );
+      await thresholdOptimizer.adjustThresholds(archetypeStats);
     }
   }
 }
