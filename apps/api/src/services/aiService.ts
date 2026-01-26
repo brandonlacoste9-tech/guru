@@ -209,6 +209,7 @@ export class AIService {
    */
   private getBrowserTools() {
     return {
+      // @ts-expect-error - AI SDK tool typing incompatibility
       browse_the_web: tool({
         description: browseTheWebTool.function.description,
         parameters: BrowseTheWebSchema,
@@ -226,6 +227,7 @@ export class AIService {
     const memoryDir = path.join(process.cwd(), "memory", `guru-${guruId}`);
 
     return {
+      // @ts-expect-error - AI SDK tool typing incompatibility
       save_finding: tool({
         description: "Save a key finding or piece of data to permanent memory.",
         parameters: z.object({
@@ -252,6 +254,7 @@ export class AIService {
           return { success: true, message: "Finding saved to memory." };
         },
       } as any),
+      // @ts-expect-error - AI SDK tool typing incompatibility
       update_task_plan: tool({
         description: "Update the current task plan or roadmap for this Guru.",
         parameters: z.object({
@@ -278,6 +281,7 @@ export class AIService {
     const tools: any = {};
 
     // 1. Tool to lookup skill details
+    // @ts-expect-error - AI SDK tool typing incompatibility
     tools.lookup_expert_skill = tool({
       description:
         "Lookup detailed instructions and examples for a specialized expert skill.",
@@ -319,6 +323,7 @@ export class AIService {
     } as any);
 
     // 2. Tool to execute skill-specific scripts (if any)
+    // @ts-expect-error - AI SDK tool typing incompatibility
     tools.execute_skill_script = tool({
       description:
         "Execute a helper script associated with a specialized skill.",

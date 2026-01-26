@@ -123,7 +123,7 @@ export class GuruExecutorService {
       const expertTools = skillRouter.getToolsForGuru(guru.id);
       // expertTools is an array of skill names (strings), filter out non-expert ones if needed
       const skillsToMount = expertTools.filter((skillName) =>
-        skillName.startsWith("expert_") || !skillName.startsWith("browse_")
+        (skillName.startsWith("expert_") || !skillName.startsWith("browse_"))
       );
 
       let mountedContext = "";
