@@ -67,7 +67,7 @@ function initBrain() {
 // INTERFACES
 // ============================================
 
-interface ExecutionResult {
+export interface ExecutionResult {
   success: boolean;
   data?: any;
   error?: string;
