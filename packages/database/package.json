@@ -2,8 +2,7 @@
   "name": "@guru/database",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts",
-  "scripts": {
+    "scripts": {
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
