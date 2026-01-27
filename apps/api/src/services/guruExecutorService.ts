@@ -9,7 +9,7 @@ import {
   eq,
   and,
 } from "@guru/database";
-import { automationService } from "./automationService";
+import { automationService, ExecutionResult } from "./automationService";
 import { SocketService } from "./socketService";
 import { guruService } from "./guruService";
 import { userProfileService } from "./userProfileService";
