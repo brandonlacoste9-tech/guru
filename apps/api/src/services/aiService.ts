@@ -252,7 +252,6 @@ export class AIService {
           return { success: true, message: "Finding saved to memory." };
         },
       }),
-      // @ts-expect-error - AI SDK tool type inference issue
       update_task_plan: tool({
         description: "Update the current task plan or roadmap for this Guru.",
         parameters: z.object({
@@ -320,7 +319,6 @@ export class AIService {
     });
 
     // 2. Tool to execute skill-specific scripts (if any)
-    // @ts-expect-error - AI SDK tool type inference issue
     tools.execute_skill_script = tool({
       description:
         "Execute a helper script associated with a specialized skill.",
