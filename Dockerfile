@@ -9,10 +9,10 @@ WORKDIR /app
 # Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
-# Copy all package.json files from packages
+# Copy package.json files from workspace packages
 COPY packages/database/package.json ./packages/database/
 COPY packages/guru-core/package.json ./packages/guru-core/
-COPY packages/shared/package.json ./packages/shared/ 2>/dev/null || true
+COPY packages/shared/package.json ./packages/shared/
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
