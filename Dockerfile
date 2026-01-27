@@ -9,7 +9,7 @@ WORKDIR /app
 # Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
-COPY packages/*/package.json ./packages/*/
+COPY packages/ ./packages/
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
@@ -44,7 +44,7 @@ WORKDIR /app
 # Copy package files for runtime dependencies
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
-COPY packages/*/package.json ./packages/*/
+COPY packages/ ./packages/
 
 # Install only production dependencies
 RUN npm install -g pnpm@8.15.4 && \
