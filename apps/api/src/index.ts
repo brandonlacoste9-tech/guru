@@ -71,6 +71,6 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-httpServer.listen(port, () => {
-  console.log(`🚀 FloGuru API running on http://localhost:${port}`);
+httpServer.listen(port, "0.0.0.0", () => {
+  console.log(`🚀 FloGuru API running on http://0.0.0.0:${port}`);
 });
