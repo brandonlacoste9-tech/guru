@@ -1,4 +1,3 @@
-// TypeScript fixes: Added @ts-expect-error comments to suppress AI SDK tool type inference errors
 import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText, tool } from "ai";
@@ -210,7 +209,6 @@ export class AIService {
    */
   private getBrowserTools() {
     return {
-      // @ts-expect-error - AI SDK tool type inference issue
       browse_the_web: tool({
         description: browseTheWebTool.function.description,
         parameters: BrowseTheWebSchema,
@@ -228,7 +226,6 @@ export class AIService {
     const memoryDir = path.join(process.cwd(), "memory", `guru-${guruId}`);
 
     return {
-      // @ts-expect-error - AI SDK tool type inference issue
       save_finding: tool({
         description: "Save a key finding or piece of data to permanent memory.",
         parameters: z.object({
@@ -282,7 +279,6 @@ export class AIService {
     const tools: any = {};
 
     // 1. Tool to lookup skill details
-    // @ts-expect-error - AI SDK tool type inference issue
     tools.lookup_expert_skill = tool({
       description:
         "Lookup detailed instructions and examples for a specialized expert skill.",
