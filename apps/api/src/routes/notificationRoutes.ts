@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { db } from "@guru/database";
-import { pushSubscriptions } from "@guru/database/src/schema";
+import { pushSubscriptions } from "@guru/database";
 import { eq, and } from "drizzle-orm";
 import { requireAuth } from "../middleware/requireAuth";
 

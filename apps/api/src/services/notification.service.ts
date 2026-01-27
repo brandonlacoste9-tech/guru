@@ -207,7 +207,7 @@ export class NotificationService {
       if (!userId) return;
 
       // 2. Fetch all push subscriptions for this user
-      const { pushSubscriptions } = await import("@guru/database/src/schema");
+      const { pushSubscriptions } = await import("@guru/database");
       const subs = await db
         .select()
         .from(pushSubscriptions)
