@@ -11,6 +11,7 @@
         "baseUrl": ".",
         "paths": {
             "@/*": [
+                      "@guru/database": ["../../packages/database/dist"]
                 "src/*"
             ]
         }
