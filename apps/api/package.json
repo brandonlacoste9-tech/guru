@@ -4,4 +4,4 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-        "build": "pnpm --filter @guru/database build && tsc,
+        "build": "pnpm --filter @guru/database build && tsc",
