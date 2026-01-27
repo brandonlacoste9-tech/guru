@@ -18,15 +18,18 @@ COPY . /app
 # 3. Install Dependencies (frozen lockfile for production)
 RUN pnpm install --frozen-lockfile
 
-# 4. Build API
+# 4. Build Database Package First (required by API)
+RUN pnpm --filter @guru/database run build
+
+# 5. Build API
 RUN pnpm --filter @guru/api run build
 
-# 5. Security: Create non-root user
+# 6. Security: Create non-root user
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodeuser && \
     chown -R nodeuser:nodejs /app
 
-# 6. Runtime
+# 7. Runtime
 USER nodeuser
 WORKDIR /app/apps/api
 EXPOSE 4000
