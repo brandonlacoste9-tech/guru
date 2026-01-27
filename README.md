@@ -1,6 +1,4 @@
-# guru
-
-<!-- D# FloGuru
+# FloGuru
 
 **FloGuru** is an open, AI-powered automation platform built around smart "Guru" agents. It enables flexible workflow automation that connects browser automation, chat integrations (Telegram, WhatsApp, Discord, etc.), and continual learning via self-improvement mechanisms. FloGuru provides modular backend, frontend, and Python packages for seamless LLM-based task execution, human-in-the-loop actions, and rapid extensibility.
 
@@ -108,4 +106,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-> **FloGuru:** Automate anything with AI. Join the community—collaborate, share agents, and push the boundaries of workflow automation!eployment trigger -->
+> **FloGuru:** Automate anything with AI. Join the community—collaborate, share agents, and push the boundaries of workflow automation!
