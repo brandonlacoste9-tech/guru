@@ -36,7 +36,7 @@ export class GuruExecutorService {
       profileName?: string;
       userId?: string;
     } = {},
-  ) {
+  ): Promise<ExecutionResult> {
     const { taskDescription, profileName, userId = "test-user" } = options;
     const startTime = new Date();
 
