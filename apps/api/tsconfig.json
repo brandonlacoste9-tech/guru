@@ -10,11 +10,13 @@
         "forceConsistentCasingInFileNames": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": [,
-                      "@guru/database": ["../../packages/database/dist"]
+            "@/*": [
                 "src/*"
             ]
-        }
+        },
+        "composite": true,
+        "declaration": true,
+        "declarationMap": true
     },
     "include": [
         "src/**/*"
@@ -23,5 +25,10 @@
         "node_modules",
         "dist",
         "src/**/*.test.ts"
+    ],
+    "references": [
+        {
+            "path": "../../packages/database"
+        }
     ]
 }
