@@ -9,7 +9,10 @@ WORKDIR /app
 # Copy package files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
-COPY packages/ ./packages/
+# Copy all package.json files from packages
+COPY packages/database/package.json ./packages/database/
+COPY packages/guru-core/package.json ./packages/guru-core/
+COPY packages/shared/package.json ./packages/shared/ 2>/dev/null || true
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
@@ -44,7 +47,10 @@ WORKDIR /app
 # Copy package files for runtime dependencies
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/api/package.json ./apps/api/
-COPY packages/ ./packages/
+# Copy package.json files from each package (explicit to avoid glob issues)
+COPY packages/database/package.json ./packages/database/
+COPY packages/guru-core/package.json ./packages/guru-core/
+COPY packages/shared/package.json ./packages/shared/
 
 # Install only production dependencies
 RUN npm install -g pnpm@8.15.4 && \
