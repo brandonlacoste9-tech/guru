@@ -1,5 +1,5 @@
-import { db } from "@guru/database";
-import { guruAutomations } from "@guru/database/src/schema";
+import { db, guruAutomations } from "@guru/database";
+
 import { eq } from "drizzle-orm";
 import { Resend } from "resend";
 import webPush from "web-push";

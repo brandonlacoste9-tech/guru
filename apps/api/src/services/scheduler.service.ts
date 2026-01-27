@@ -1,8 +1,8 @@
 // Scheduler Service – creates cron jobs for Guru automations
 // ---------------------------------------------------------------
 import { CronJob } from "cron";
-import { db } from "@guru/database";
-import { guruAutomations } from "@guru/database/src/schema";
+import { db, guruAutomations } from "@guru/database";
+
 import { eq, isNotNull } from "drizzle-orm";
 import { notificationService } from "./notification.service";
 

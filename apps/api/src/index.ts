@@ -29,7 +29,7 @@ schedulerService;
 metaLearningService.init();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = Number(process.env.PORT) || 4000;
 const httpServer = createServer(app);
 
 // Initialize WebSockets
