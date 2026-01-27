@@ -1,3 +1,4 @@
+// TypeScript fixes: Added @ts-expect-error comments to suppress AI SDK tool type inference errors
 import { createOpenAI } from "@ai-sdk/openai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateText, tool } from "ai";
@@ -209,11 +210,12 @@ export class AIService {
    */
   private getBrowserTools() {
     return {
+      // @ts-expect-error - AI SDK tool type inference issue
       browse_the_web: tool({
         description: browseTheWebTool.function.description,
         parameters: BrowseTheWebSchema,
         execute: async (args: any) => handleBrowseTheWeb(args),
-      } as any),
+      }),
     };
   }
 
@@ -226,6 +228,7 @@ export class AIService {
     const memoryDir = path.join(process.cwd(), "memory", `guru-${guruId}`);
 
     return {
+      // @ts-expect-error - AI SDK tool type inference issue
       save_finding: tool({
         description: "Save a key finding or piece of data to permanent memory.",
         parameters: z.object({
@@ -251,7 +254,8 @@ export class AIService {
           fs.appendFileSync(findingsPath, entry);
           return { success: true, message: "Finding saved to memory." };
         },
-      } as any),
+      }),
+      // @ts-expect-error - AI SDK tool type inference issue
       update_task_plan: tool({
         description: "Update the current task plan or roadmap for this Guru.",
         parameters: z.object({
@@ -264,7 +268,7 @@ export class AIService {
           fs.writeFileSync(planPath, updatedPlan);
           return { success: true, message: "Task plan updated." };
         },
-      } as any),
+      }),
     };
   }
 
@@ -278,6 +282,7 @@ export class AIService {
     const tools: any = {};
 
     // 1. Tool to lookup skill details
+    // @ts-expect-error - AI SDK tool type inference issue
     tools.lookup_expert_skill = tool({
       description:
         "Lookup detailed instructions and examples for a specialized expert skill.",
@@ -316,9 +321,10 @@ export class AIService {
         }
         return { error: `Skill '${skillName}' definition not found.` };
       },
-    } as any);
+    });
 
     // 2. Tool to execute skill-specific scripts (if any)
+    // @ts-expect-error - AI SDK tool type inference issue
     tools.execute_skill_script = tool({
       description:
         "Execute a helper script associated with a specialized skill.",
@@ -353,7 +359,7 @@ export class AIService {
           how_to_run: `python .agent/skills/${skillName}/scripts/${scriptName} ${args.join(" ")}`,
         };
       },
-    } as any);
+    });
 
     return tools;
   }

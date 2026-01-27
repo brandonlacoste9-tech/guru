@@ -18,7 +18,7 @@ COPY . /app
 # 3. Install Dependencies (frozen lockfile for production)
 RUN pnpm install --frozen-lockfile
 
-# 4. Build Database Package First (required by API)
+# 4. Build Database package first (required dependency)
 RUN pnpm --filter @guru/database run build
 
 # 5. Build API

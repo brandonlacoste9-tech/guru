@@ -2,7 +2,6 @@
 // ---------------------------------------------------------------
 import { CronJob } from "cron";
 import { db, guruAutomations } from "@guru/database";
-
 import { eq, isNotNull } from "drizzle-orm";
 import { notificationService } from "./notification.service";
 
