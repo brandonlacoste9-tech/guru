@@ -1,21 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
-import CopilotWrapper from "@/components/CopilotWrapper";
-import { SupabaseProvider } from "@/components/SupabaseProvider";
-
+// Root layout - only metadata, actual layout is in [locale]/layout.tsx
 export const metadata: Metadata = {
   title: "FloGuru | Your AI Life Coach",
   description: "Automate your habits and transform your life with specialized AI Gurus.",
@@ -42,27 +27,11 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <head>
-        <link rel="manifest" href="/manifest.json" />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ServiceWorkerRegister />
-        <SupabaseProvider>
-          <CopilotWrapper>
-            {children}
-          </CopilotWrapper>
-        </SupabaseProvider>
-      </body>
-    </html>
-  );
+  // This layout is minimal - actual rendering happens in [locale]/layout.tsx
+  return children;
 }

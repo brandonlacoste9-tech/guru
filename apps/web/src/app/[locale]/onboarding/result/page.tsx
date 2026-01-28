@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { GURUS, type Guru, type Habit } from '@floguru/guru-core';
 
 function ResultContent() {

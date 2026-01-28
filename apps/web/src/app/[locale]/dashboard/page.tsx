@@ -13,7 +13,7 @@ import { ExecutionHistoryFeed } from '@/components/dashboard/ExecutionHistoryFee
 import GuruRadar from '@/components/dashboard/GuruRadar';
 import { LayoutDashboard, Scissors, Settings, LogOut, Bell, Search, User, ShoppingBag } from 'lucide-react';
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { useSupabase } from '@/components/SupabaseProvider';
 
 export default function DashboardPage() {

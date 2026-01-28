@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ONBOARDING_QUIZ, matchGuru, type QuizAnswer, type QuizQuestion } from '@floguru/guru-core';
 
