@@ -69,7 +69,6 @@ export class AIService {
       const result = await generateText({
         model: this.google.chat("gemini-1.5-flash-latest"), // Faster/Cheaper for metadata extraction
         prompt,
-        maxSteps: 1,
       });
 
       const json = JSON.parse(result.text.trim());
@@ -135,7 +134,6 @@ export class AIService {
         model: this.deepseek.chat("deepseek-chat"),
         system: params.systemPrompt,
         prompt: params.userPrompt,
-        maxSteps: params.maxSteps || 30,
         tools: {
           ...this.getBrowserTools(),
           ...this.getMemoryTools(params.guruId),
@@ -180,7 +178,6 @@ export class AIService {
           model: this.google.chat("gemini-1.5-flash-latest"),
           system: params.systemPrompt,
           prompt: params.userPrompt,
-          maxSteps: params.maxSteps || 30,
           tools: {
             ...this.getBrowserTools(),
             ...this.getMemoryTools(params.guruId),
@@ -213,7 +210,7 @@ export class AIService {
         description: browseTheWebTool.function.description,
         parameters: BrowseTheWebSchema,
         execute: async (args: any) => handleBrowseTheWeb(args),
-      }),
+      } as any),
     };
   }
 
@@ -251,7 +248,7 @@ export class AIService {
           fs.appendFileSync(findingsPath, entry);
           return { success: true, message: "Finding saved to memory." };
         },
-      }),
+      } as any),
       update_task_plan: tool({
         description: "Update the current task plan or roadmap for this Guru.",
         parameters: z.object({
@@ -259,12 +256,13 @@ export class AIService {
             .string()
             .describe("The complete updated plan in markdown"),
         }),
-        execute: async ({ updatedPlan }: { updatedPlan: string }) => {
+        execute: async (args: { updatedPlan: string }) => {
+          const { updatedPlan } = args;
           const planPath = path.join(memoryDir, "task_plan.md");
           fs.writeFileSync(planPath, updatedPlan);
           return { success: true, message: "Task plan updated." };
         },
-      }),
+      } as any),
     };
   }
 
@@ -316,7 +314,7 @@ export class AIService {
         }
         return { error: `Skill '${skillName}' definition not found.` };
       },
-    });
+    } as any);
 
     // 2. Tool to execute skill-specific scripts (if any)
     tools.execute_skill_script = tool({
@@ -332,7 +330,8 @@ export class AIService {
           .optional()
           .describe("Arguments to pass to the script"),
       }),
-      execute: async ({ skillName, scriptName, args = [] }: { skillName: string; scriptName: string; args?: string[] }) => {
+      execute: async (args: { skillName: string; scriptName: string; args?: string[] }) => {
+        const { skillName, scriptName, args: scriptArgs = [] } = args;
         if (!allowedSkills.includes(skillName)) {
           return {
             error: `Permission denied: Skill '${skillName}' is not in your domain-specific toolset.`,
@@ -350,10 +349,10 @@ export class AIService {
         return {
           success: true,
           message: `Script ${scriptName} for ${skillName} is ready for orchestration.`,
-          how_to_run: `python .agent/skills/${skillName}/scripts/${scriptName} ${args.join(" ")}`,
+          how_to_run: `python .agent/skills/${skillName}/scripts/${scriptName} ${scriptArgs.join(" ")}`,
         };
       },
-    });
+    } as any);
 
     return tools;
   }

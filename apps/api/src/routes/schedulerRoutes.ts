@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import { schedulerService } from '../services/scheduler.service';
 
-const router = express.Router();
+const router: Router = Router();
 
 // Get all active scheduled jobs
 router.get('/jobs', (req: Request, res: Response) => {
