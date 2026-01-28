@@ -70,7 +70,7 @@ export class AIService {
         model: this.google.chat("gemini-1.5-flash-latest"), // Faster/Cheaper for metadata extraction
         prompt,
         maxSteps: 1,
-      } as any);
+      });
 
       const json = JSON.parse(result.text.trim());
 
@@ -140,8 +140,8 @@ export class AIService {
           ...this.getBrowserTools(),
           ...this.getMemoryTools(params.guruId),
           ...this.getExpertTools(params.tools || []),
-        },
-      } as any);
+        } as any,
+      });
 
       return {
         success: true,
@@ -185,8 +185,8 @@ export class AIService {
             ...this.getBrowserTools(),
             ...this.getMemoryTools(params.guruId),
             ...this.getExpertTools(params.tools || []),
-          },
-        } as any);
+          } as any,
+        });
 
         return {
           success: true,
@@ -207,7 +207,7 @@ export class AIService {
   /**
    * Browser automation tools powered by browser-use
    */
-  private getBrowserTools() {
+  private getBrowserTools(): any {
     return {
       browse_the_web: tool({
         description: browseTheWebTool.function.description,
@@ -220,7 +220,7 @@ export class AIService {
   /**
    * Memory management tools for persistent knowledge
    */
-  private getMemoryTools(guruId?: string) {
+  private getMemoryTools(guruId?: string): any {
     if (!guruId) return {};
 
     const memoryDir = path.join(process.cwd(), "memory", `guru-${guruId}`);
@@ -272,7 +272,7 @@ export class AIService {
    * Generates dynamic tools for expert skills.
    * This bridges the 222+ skills into the LLM context.
    */
-  private getExpertTools(allowedSkills: string[]) {
+  private getExpertTools(allowedSkills: string[]): any {
     if (allowedSkills.length === 0) return {};
 
     const tools: any = {};
