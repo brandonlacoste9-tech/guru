@@ -252,7 +252,7 @@ importers:
         version: 6.0.52(zod@3.25.76)
       axios:
         specifier: ^1.13.2
-        version: 1.13.3
+        version: 1.13.3(debug@4.4.3)
       bullmq:
         specifier: ^5.66.5
         version: 5.67.1
@@ -274,6 +274,9 @@ importers:
       express:
         specifier: ^4.18.0
         version: 4.22.1
+      express-rate-limit:
+        specifier: ^7.1.5
+        version: 7.5.1(express@4.22.1)
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -1051,7 +1054,7 @@ importers:
         version: 0.5.0
       axios:
         specifier: ^1.7.3
-        version: 1.13.3
+        version: 1.13.3(debug@4.4.3)
       bonjour-service:
         specifier: 1.3.0
         version: 1.3.0
@@ -1917,7 +1920,7 @@ importers:
         version: 1.0.20
       axios:
         specifier: ^1.12.0
-        version: 1.13.3
+        version: 1.13.3(debug@4.4.3)
       better-sqlite3:
         specifier: ^12.4.1
         version: 12.6.2
@@ -8257,7 +8260,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dependencies:
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       axios-proxy-builder: 0.1.2
       console.table: 0.10.0
       detect-libc: 2.1.2
@@ -9262,7 +9265,7 @@ packages:
     dependencies:
       '@types/node': 24.10.9
     optionalDependencies:
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
     transitivePeerDependencies:
       - debug
     dev: false
@@ -13652,7 +13655,7 @@ packages:
       '@sap/xsenv': 6.0.0
       '@sap/xssec': 4.12.2
       async-retry: 1.3.3
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       jks-js: 1.1.5
       jsonwebtoken: 9.0.3
     transitivePeerDependencies:
@@ -13666,7 +13669,7 @@ packages:
       '@sap-cloud-sdk/connectivity': 4.3.1
       '@sap-cloud-sdk/resilience': 4.3.1
       '@sap-cloud-sdk/util': 4.3.1
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -13679,7 +13682,7 @@ packages:
       '@sap-cloud-sdk/http-client': 4.3.1
       '@sap-cloud-sdk/resilience': 4.3.1
       '@sap-cloud-sdk/util': 4.3.1
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -13690,7 +13693,7 @@ packages:
     dependencies:
       '@sap-cloud-sdk/util': 4.3.1
       async-retry: 1.3.3
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       opossum: 9.0.0
     transitivePeerDependencies:
       - debug
@@ -13699,7 +13702,7 @@ packages:
   /@sap-cloud-sdk/util@4.3.1:
     resolution: {integrity: sha512-ew3+RiyUAKKhb/h/M1g2di9DjoeDQ3uQIDS7a+rN9lqlaP2+mb0mbK8x1PHLJ8agvZNjFR5y5k2jKmIiHVFT3A==}
     dependencies:
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       chalk: 4.1.2
       logform: 2.7.0
       voca: 1.4.1
@@ -14015,7 +14018,7 @@ packages:
       '@slack/types': 2.19.0
       '@slack/web-api': 7.13.0
       '@types/express': 5.0.6
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       express: 5.2.1
       path-to-regexp: 8.3.0
       raw-body: 3.0.2
@@ -14076,7 +14079,7 @@ packages:
       '@slack/types': 2.19.0
       '@types/node': 20.19.30
       '@types/retry': 0.12.0
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       eventemitter3: 5.0.4
       form-data: 4.0.4
       is-electron: 2.2.2
@@ -18762,7 +18765,7 @@ packages:
       '@whiskeysockets/eslint-config': github.com/whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.2)(typescript@5.9.3)
       async-lock: 1.4.1
       audio-decode: 2.2.3
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       cache-manager: 5.7.6
       libphonenumber-js: 1.12.35
       libsignal: github.com/WhiskeySockets/libsignal-node/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67
@@ -19547,6 +19550,7 @@ packages:
   /assert-plus@1.0.0:
     resolution: {integrity: sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==}
     engines: {node: '>=0.8'}
+    requiresBuild: true
 
   /assertion-error@1.1.0:
     resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
@@ -19710,20 +19714,11 @@ packages:
       tunnel: 0.0.6
     dev: true
 
-  /axios@1.13.3:
-    resolution: {integrity: sha512-ERT8kdX7DZjtUm7IitEyV7InTHAF42iJuMArIiDIV5YtPanJkgw4hw5Dyg9fh0mihdWNn1GKaeIWErfe56UQ1g==}
-    dependencies:
-      follow-redirects: 1.15.11(debug@4.4.3)
-      form-data: 4.0.5
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-
   /axios@1.13.3(debug@4.4.3):
     resolution: {integrity: sha512-ERT8kdX7DZjtUm7IitEyV7InTHAF42iJuMArIiDIV5YtPanJkgw4hw5Dyg9fh0mihdWNn1GKaeIWErfe56UQ1g==}
     dependencies:
       follow-redirects: 1.15.11(debug@4.4.3)
-      form-data: 4.0.4
+      form-data: 4.0.5
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -21304,6 +21299,7 @@ packages:
 
   /core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
+    requiresBuild: true
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -24732,6 +24728,15 @@ packages:
     resolution: {integrity: sha512-ZgEeZXj30q+I0EN+CbSSpIyPaJ5HVQD18Z1m+u1FXbAeT94mr1zw50q4q6jiiC447Nl/YTcIYSAftiGqetwXCA==}
     dev: true
 
+  /express-rate-limit@7.5.1(express@4.22.1):
+    resolution: {integrity: sha512-7iN8iPMDzOMHPUYllBEsQdWVB6fPDMPqwjBaFrgr4Jgr/+okjvzAy+UHlYYL/Vs0OsOrMkwS6PJDkFlJwoxUnw==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      express: '>= 4.11'
+    dependencies:
+      express: 4.22.1
+    dev: false
+
   /express-rate-limit@7.5.1(express@5.2.1):
     resolution: {integrity: sha512-7iN8iPMDzOMHPUYllBEsQdWVB6fPDMPqwjBaFrgr4Jgr/+okjvzAy+UHlYYL/Vs0OsOrMkwS6PJDkFlJwoxUnw==}
     engines: {node: '>= 16'}
@@ -24892,6 +24897,7 @@ packages:
   /extsprintf@1.4.1:
     resolution: {integrity: sha512-Wrk35e8ydCKDj/ArClo1VrPVmN8zph5V4AtHwIuHhvMXsKf73UT3BOD+azBIW+3wOJ4FhEH7zyaJCFvChjYvMA==}
     engines: {'0': node >=0.6.0}
+    requiresBuild: true
 
   /fast-content-type-parse@3.0.0:
     resolution: {integrity: sha512-ZvLdcY8P+N8mGQJahJV5G4U88CSvT1rP8ApL6uETe88MBXrBHAkZlSEySdUlyztF7ccb+Znos3TFqaepHxdhBg==}
@@ -28151,7 +28157,7 @@ packages:
       '@langchain/core': 1.0.2(@opentelemetry/api@1.9.0)(@opentelemetry/sdk-trace-base@2.5.0)(openai@6.16.0)
       '@langchain/openai': 0.6.17(@langchain/core@1.0.2)
       '@langchain/textsplitters': 0.1.0(@langchain/core@1.0.2)
-      axios: 1.13.3
+      axios: 1.13.3(debug@4.4.3)
       cheerio: 1.2.0
       js-tiktoken: 1.0.21
       js-yaml: 4.1.0
@@ -28202,7 +28208,7 @@ packages:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
       console-table-printer: 2.15.0
-      openai: 6.16.0(zod@4.3.6)
+      openai: 6.16.0(zod@3.25.76)
       p-queue: 6.6.2
       semver: 7.7.1
       uuid: 10.0.0
@@ -31825,6 +31831,7 @@ packages:
         optional: true
     dependencies:
       zod: 4.3.6
+    dev: true
 
   /openapi-types@12.1.3:
     resolution: {integrity: sha512-N4YtSYJqghVu4iek2ZUvcN/0aqH1kRDuNqzcycDxhOUpg7GdvLa2F3DgS6yBNhInhv2r/6I0Flkn7CqL8+nIcw==}
@@ -40506,6 +40513,7 @@ packages:
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
+    requiresBuild: true
     dev: true
 
   /xmlchars@2.2.0:
