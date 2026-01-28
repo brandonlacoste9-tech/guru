@@ -2,7 +2,7 @@ import { Router } from "express";
 import { guruService } from "../services/guruService";
 import { requireAuth } from "../middleware/requireAuth";
 
-const router = Router();
+const router: Router = Router();
 
 // Public route - list templates
 router.get("/templates", async (req, res) => {

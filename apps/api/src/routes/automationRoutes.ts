@@ -2,7 +2,7 @@ import { Router } from "express";
 import { automationService } from "../services/automationService";
 import { requireAuth } from "../middleware/requireAuth";
 
-const router = Router();
+const router: Router = Router();
 
 // Apply authentication to all automation routes
 router.use(requireAuth);

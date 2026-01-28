@@ -2,7 +2,7 @@ import { Router } from "express";
 import { guruService } from "../services/guruService";
 import { requireAuth } from "../middleware/requireAuth";
 
-const router = Router();
+const router: Router = Router();
 
 // Create a new Guru Automation
 router.post("/", requireAuth, async (req, res) => {

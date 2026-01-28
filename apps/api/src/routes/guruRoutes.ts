@@ -2,7 +2,7 @@ import { Router } from "express";
 import { guruService } from "../services/guruService";
 import { requireAuth } from "../middleware/requireAuth";
 
-const router = Router();
+const router: Router = Router();
 
 // Test endpoint (no auth required) - for deployment verification
 router.post("/test/execute", async (req, res) => {

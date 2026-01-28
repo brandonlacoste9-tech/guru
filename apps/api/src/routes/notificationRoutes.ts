@@ -4,7 +4,7 @@ import { pushSubscriptions } from "@guru/database";
 import { eq, and } from "drizzle-orm";
 import { requireAuth } from "../middleware/requireAuth";
 
-const router = Router();
+const router: Router = Router();
 
 // Public endpoint for VAPID key
 router.get("/vapid-key", (req, res) => {

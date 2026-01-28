@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { automationService } from '../services/automationService';
 import { execSync } from 'child_process';
 
-const router = Router();
+const router: Router = Router();
 
 /**
  * Chaos Test: Missing Dependency Trap

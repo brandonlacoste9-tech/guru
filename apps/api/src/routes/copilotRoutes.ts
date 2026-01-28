@@ -5,7 +5,7 @@ import {
 } from "@copilotkit/runtime";
 import { Router } from "express";
 
-const router = Router();
+const router: Router = Router();
 
 // Initialize the CopilotRuntime with an adapter (OpenAI/DeepSeek compatible)
 const copilotRuntime = new CopilotRuntime();
