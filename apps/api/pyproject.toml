@@ -13,8 +13,7 @@ dependencies = [
     "browser-use>=0.1.0",
     "langchain-openai",
     "langchain-google-genai",
-    "python-dotenv",
-    "playwright"
+    "python-dotenv"
 ]
 requires-python = ">=3.10"
 
