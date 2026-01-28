@@ -696,13 +696,6 @@ importers:
         version: 5.9.3
 
   packages/guru-core:
-    dependencies:
-      gray-matter:
-        specifier: ^4.0.3
-        version: 4.0.3
-      simple-git:
-        specifier: ^3.30.0
-        version: 3.30.0
     devDependencies:
       typescript:
         specifier: ^5.0.0
