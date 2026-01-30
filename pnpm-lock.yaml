@@ -201,10 +201,10 @@ importers:
     dependencies:
       '@copilotkit/react-core':
         specifier: ^1.51.2
-        version: 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@3.25.76)
+        version: 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@4.3.6)
       '@copilotkit/react-ui':
         specifier: ^1.51.2
-        version: 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@3.25.76)
+        version: 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@4.3.6)
       '@copilotkit/shared':
         specifier: ^1.51.2
         version: 1.51.2(@ag-ui/core@0.0.42)
@@ -227,11 +227,11 @@ importers:
         specifier: ^0.562.0
         version: 0.562.0(react@19.2.3)
       next:
-        specifier: 16.1.4
-        version: 16.1.4(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3)
+        specifier: 16.1.5
+        version: 16.1.5(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3)
       next-intl:
         specifier: ^3.19.0
-        version: 3.26.5(next@16.1.4)(react@19.2.3)
+        version: 3.26.5(next@16.1.5)(react@19.2.3)
       react:
         specifier: 19.2.3
         version: 19.2.3
@@ -299,7 +299,7 @@ importers:
         version: 8.18.1
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.19.30)(typescript@5.9.3)
+        version: 10.9.2(@types/node@25.1.0)(typescript@5.9.3)
       typescript:
         specifier: ^5.4.5
         version: 5.9.3
@@ -321,7 +321,7 @@ importers:
         version: 0.20.18
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.19.30)(typescript@5.9.3)
+        version: 10.9.2(@types/node@25.1.0)(typescript@5.9.3)
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
@@ -444,8 +444,8 @@ packages:
       '@protobuf-ts/protoc': 2.11.1
     dev: false
 
-  /@ai-sdk/anthropic@2.0.57(zod@3.25.76):
-    resolution: {integrity: sha512-DREpYqW2pylgaj69gZ+K8u92bo9DaMgFdictYnY+IwYeY3bawQ4zI7l/o1VkDsBDljAx8iYz5lPURwVZNu+Xpg==}
+  /@ai-sdk/anthropic@2.0.58(zod@3.25.76):
+    resolution: {integrity: sha512-CkNW5L1Arv8gPtPlEmKd+yf/SG9ucJf0XQdpMG8OiYEtEMc2smuCA+tyCp8zI7IBVg/FE7nUfFHntQFaOjRwJQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -466,8 +466,8 @@ packages:
       zod: 3.25.76
     dev: false
 
-  /@ai-sdk/gateway@2.0.29(zod@3.25.76):
-    resolution: {integrity: sha512-1b7E9F/B5gex/1uCkhs+sGIbH0KsZOItHnNz3iY5ir+nc4ZUA6WOU5Cu2w1USlc+3UVbhf+H+iNLlxVjLe4VvQ==}
+  /@ai-sdk/gateway@2.0.30(zod@3.25.76):
+    resolution: {integrity: sha512-5Nrkj8B4MzkkOfjjA+Cs5pamkbkK4lI11bx80QV7TFcen/hWA8wEC+UVzwuM5H2zpekoNMjvl6GonHnR62XIZw==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -540,14 +540,14 @@ packages:
       zod: 3.25.76
     dev: false
 
-  /@ai-sdk/openai@2.0.85(zod@3.25.76):
-    resolution: {integrity: sha512-3pzr7qVhsOXwjPAfmvFNZz3sRWCuyMOc3GgLHe7sWY0t8J4hA5mwQ4LISTKYI3iIr8IXzAQn9MUrC8Hiji9RpA==}
+  /@ai-sdk/openai@2.0.89(zod@3.25.76):
+    resolution: {integrity: sha512-4+qWkBCbL9HPKbgrUO/F2uXZ8GqrYxHa8SWEYIzxEJ9zvWw3ISr3t1/27O1i8MGSym+PzEyHBT48EV4LAwWaEw==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
     dependencies:
-      '@ai-sdk/provider': 2.0.0
-      '@ai-sdk/provider-utils': 3.0.19(zod@3.25.76)
+      '@ai-sdk/provider': 2.0.1
+      '@ai-sdk/provider-utils': 3.0.20(zod@3.25.76)
       zod: 3.25.76
     dev: false
 
@@ -564,18 +564,6 @@ packages:
 
   /@ai-sdk/provider-utils@3.0.17(zod@3.25.76):
     resolution: {integrity: sha512-TR3Gs4I3Tym4Ll+EPdzRdvo/rc8Js6c4nVhFLuvGLX/Y4V9ZcQMa/HTiYsHEgmYrf1zVi6Q145UEZUfleOwOjw==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      zod: ^3.25.76 || ^4.1.8
-    dependencies:
-      '@ai-sdk/provider': 2.0.0
-      '@standard-schema/spec': 1.1.0
-      eventsource-parser: 3.0.6
-      zod: 3.25.76
-    dev: false
-
-  /@ai-sdk/provider-utils@3.0.19(zod@3.25.76):
-    resolution: {integrity: sha512-W41Wc9/jbUVXVwCN/7bWa4IKe8MtxO3EyA0Hfhx6grnmiYlCvpI8neSYWFE0zScXJkgA/YK3BRybzgyiXuu6JA==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -868,7 +856,7 @@ packages:
     resolution: {integrity: sha512-YslZMgtJUyuMbZ+aKvfF3x1f5liK4mWNxghFRv7jqRR9C3R3fAOGTTKvxXDa2Y1s9zSbcpuO0cAxDYsc9SrXoQ==}
     dev: false
 
-  /@copilotkit/react-core@1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@3.25.76):
+  /@copilotkit/react-core@1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@4.3.6):
     resolution: {integrity: sha512-7D72R2KqdyK1yfeS1XyWeV8wJ4Jd8mcaXR7/hZKPDAo0eh4HSh0v6SbNLbV4gDkCey4Ep8jGPb/y5RCZgxYPuA==}
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
@@ -885,7 +873,7 @@ packages:
       react-dom: 19.2.3(react@19.2.3)
       react-markdown: 8.0.7(@types/react@19.2.10)(react@19.2.3)
       untruncate-json: 0.0.1
-      zod: 3.25.76
+      zod: 4.3.6
     transitivePeerDependencies:
       - '@ag-ui/core'
       - '@anthropic-ai/sdk'
@@ -913,12 +901,12 @@ packages:
       - supports-color
     dev: false
 
-  /@copilotkit/react-ui@1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@3.25.76):
+  /@copilotkit/react-ui@1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@4.3.6):
     resolution: {integrity: sha512-Attu02uG/KkHmOHUAdHlOu98qTjuR4dpv8YTxeDZIkrcDnttpLg4qjSvpZZm5bXP+Yd68ImQv5DCBlEBDpFyNg==}
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
     dependencies:
-      '@copilotkit/react-core': 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@3.25.76)
+      '@copilotkit/react-core': 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(@types/react-dom@19.2.3)(@types/react@19.2.10)(graphql@16.12.0)(micromark@4.0.2)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)(zod@4.3.6)
       '@copilotkit/runtime-client-gql': 1.51.2(@ag-ui/core@0.0.42)(@copilotkitnext/agent@1.51.2)(@copilotkitnext/runtime@1.51.2)(@langchain/core@1.1.17)(graphql@16.12.0)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)
       '@copilotkit/shared': 1.51.2(@ag-ui/core@0.0.42)
       '@headlessui/react': 2.2.9(react-dom@19.2.3)(react@19.2.3)
@@ -1098,10 +1086,10 @@ packages:
       '@ag-ui/core': 0.0.42
       '@ag-ui/langgraph': 0.0.20(@ag-ui/client@0.0.42)(@ag-ui/core@0.0.42)(openai@5.23.2)(react-dom@19.2.3)(react@19.2.3)
       '@copilotkit/shared': 1.51.2(@ag-ui/core@0.0.42)
-      '@copilotkitnext/agent': 1.51.2(hono@4.11.4)
+      '@copilotkitnext/agent': 1.51.2(hono@4.11.7)
       '@copilotkitnext/runtime': 1.51.2(openai@5.23.2)
       '@graphql-yoga/plugin-defer-stream': 3.18.0(graphql-yoga@5.18.0)(graphql@16.12.0)
-      '@hono/node-server': 1.19.9(hono@4.11.4)
+      '@hono/node-server': 1.19.9(hono@4.11.7)
       '@langchain/core': 1.1.17(openai@5.23.2)
       '@scarf/scarf': 1.4.0
       class-transformer: 0.5.1
@@ -1109,8 +1097,8 @@ packages:
       graphql: 16.12.0
       graphql-scalars: 1.25.0(graphql@16.12.0)
       graphql-yoga: 5.18.0(graphql@16.12.0)
-      hono: 4.11.4
-      openai: 5.23.2(zod@3.25.76)
+      hono: 4.11.7
+      openai: 5.23.2(zod@4.3.6)
       partial-json: 0.1.7
       pino: 9.14.0
       pino-pretty: 11.3.0
@@ -1141,36 +1129,17 @@ packages:
       - encoding
     dev: false
 
-  /@copilotkitnext/agent@1.51.2(hono@4.11.4):
-    resolution: {integrity: sha512-qGUFt/m+AkA9Y/mzp0Nh5HBbPdrPupzFn6vInvXR1/KCh1+Y0RLZ5QDsGc0SJvh6FMiA6XkEuM4mKp0WimGa+g==}
-    engines: {node: '>=18'}
-    dependencies:
-      '@ag-ui/client': 0.0.42
-      '@ai-sdk/anthropic': 2.0.57(zod@3.25.76)
-      '@ai-sdk/google': 2.0.52(zod@3.25.76)
-      '@ai-sdk/mcp': 0.0.8(zod@3.25.76)
-      '@ai-sdk/openai': 2.0.85(zod@3.25.76)
-      '@modelcontextprotocol/sdk': 1.25.3(hono@4.11.4)(zod@3.25.76)
-      ai: 5.0.123(zod@3.25.76)
-      rxjs: 7.8.1
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@cfworker/json-schema'
-      - hono
-      - supports-color
-    dev: false
-
   /@copilotkitnext/agent@1.51.2(hono@4.11.7):
     resolution: {integrity: sha512-qGUFt/m+AkA9Y/mzp0Nh5HBbPdrPupzFn6vInvXR1/KCh1+Y0RLZ5QDsGc0SJvh6FMiA6XkEuM4mKp0WimGa+g==}
     engines: {node: '>=18'}
     dependencies:
       '@ag-ui/client': 0.0.42
-      '@ai-sdk/anthropic': 2.0.57(zod@3.25.76)
+      '@ai-sdk/anthropic': 2.0.58(zod@3.25.76)
       '@ai-sdk/google': 2.0.52(zod@3.25.76)
       '@ai-sdk/mcp': 0.0.8(zod@3.25.76)
-      '@ai-sdk/openai': 2.0.85(zod@3.25.76)
+      '@ai-sdk/openai': 2.0.89(zod@3.25.76)
       '@modelcontextprotocol/sdk': 1.25.3(hono@4.11.7)(zod@3.25.76)
-      ai: 5.0.123(zod@3.25.76)
+      ai: 5.0.124(zod@3.25.76)
       rxjs: 7.8.1
       zod: 3.25.76
     transitivePeerDependencies:
@@ -1240,7 +1209,7 @@ packages:
       cors: 2.8.6
       express: 4.22.1
       hono: 4.11.7
-      openai: 5.23.2(zod@3.25.76)
+      openai: 5.23.2(zod@4.3.6)
       rxjs: 7.8.1
     transitivePeerDependencies:
       - supports-color
@@ -2005,15 +1974,6 @@ packages:
       use-sync-external-store: 1.6.0(react@19.2.3)
     dev: false
 
-  /@hono/node-server@1.19.9(hono@4.11.4):
-    resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
-    engines: {node: '>=18.14.1'}
-    peerDependencies:
-      hono: ^4
-    dependencies:
-      hono: 4.11.4
-    dev: false
-
   /@hono/node-server@1.19.9(hono@4.11.7):
     resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
     engines: {node: '>=18.14.1'}
@@ -2551,37 +2511,6 @@ packages:
       langium: 3.3.1
     dev: false
 
-  /@modelcontextprotocol/sdk@1.25.3(hono@4.11.4)(zod@3.25.76):
-    resolution: {integrity: sha512-vsAMBMERybvYgKbg/l4L1rhS7VXV1c0CtyJg72vwxONVX0l4ZfKVAnZEWTQixJGTzKnELjQ59e4NbdFDALRiAQ==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      '@cfworker/json-schema': ^4.1.1
-      zod: ^3.25 || ^4.0
-    peerDependenciesMeta:
-      '@cfworker/json-schema':
-        optional: true
-    dependencies:
-      '@hono/node-server': 1.19.9(hono@4.11.4)
-      ajv: 8.17.1
-      ajv-formats: 3.0.1(ajv@8.17.1)
-      content-type: 1.0.5
-      cors: 2.8.6
-      cross-spawn: 7.0.6
-      eventsource: 3.0.7
-      eventsource-parser: 3.0.6
-      express: 5.2.1
-      express-rate-limit: 7.5.1(express@5.2.1)
-      jose: 6.1.3
-      json-schema-typed: 8.0.2
-      pkce-challenge: 5.0.1
-      raw-body: 3.0.2
-      zod: 3.25.76
-      zod-to-json-schema: 3.25.1(zod@3.25.76)
-    transitivePeerDependencies:
-      - hono
-      - supports-color
-    dev: false
-
   /@modelcontextprotocol/sdk@1.25.3(hono@4.11.7)(zod@3.25.76):
     resolution: {integrity: sha512-vsAMBMERybvYgKbg/l4L1rhS7VXV1c0CtyJg72vwxONVX0l4ZfKVAnZEWTQixJGTzKnELjQ59e4NbdFDALRiAQ==}
     engines: {node: '>=18'}
@@ -2671,8 +2600,8 @@ packages:
     dev: true
     optional: true
 
-  /@next/env@16.1.4:
-    resolution: {integrity: sha512-gkrXnZyxPUy0Gg6SrPQPccbNVLSP3vmW8LU5dwEttEEC1RwDivk8w4O+sZIjFvPrSICXyhQDCG+y3VmjlJf+9A==}
+  /@next/env@16.1.5:
+    resolution: {integrity: sha512-CRSCPJiSZoi4Pn69RYBDI9R7YK2g59vLexPQFXY0eyw+ILevIenCywzg+DqmlBik9zszEnw2HLFOUlLAcJbL7g==}
     dev: false
 
   /@next/eslint-plugin-next@16.1.4:
@@ -2681,8 +2610,8 @@ packages:
       fast-glob: 3.3.1
     dev: true
 
-  /@next/swc-darwin-arm64@16.1.4:
-    resolution: {integrity: sha512-T8atLKuvk13XQUdVLCv1ZzMPgLPW0+DWWbHSQXs0/3TjPrKNxTmUIhOEaoEyl3Z82k8h/gEtqyuoZGv6+Ugawg==}
+  /@next/swc-darwin-arm64@16.1.5:
+    resolution: {integrity: sha512-eK7Wdm3Hjy/SCL7TevlH0C9chrpeOYWx2iR7guJDaz4zEQKWcS1IMVfMb9UKBFMg1XgzcPTYPIp1Vcpukkjg6Q==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -2690,8 +2619,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-darwin-x64@16.1.4:
-    resolution: {integrity: sha512-AKC/qVjUGUQDSPI6gESTx0xOnOPQ5gttogNS3o6bA83yiaSZJek0Am5yXy82F1KcZCx3DdOwdGPZpQCluonuxg==}
+  /@next/swc-darwin-x64@16.1.5:
+    resolution: {integrity: sha512-foQscSHD1dCuxBmGkbIr6ScAUF6pRoDZP6czajyvmXPAOFNnQUJu2Os1SGELODjKp/ULa4fulnBWoHV3XdPLfA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -2699,8 +2628,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-gnu@16.1.4:
-    resolution: {integrity: sha512-POQ65+pnYOkZNdngWfMEt7r53bzWiKkVNbjpmCt1Zb3V6lxJNXSsjwRuTQ8P/kguxDC8LRkqaL3vvsFrce4dMQ==}
+  /@next/swc-linux-arm64-gnu@16.1.5:
+    resolution: {integrity: sha512-qNIb42o3C02ccIeSeKjacF3HXotGsxh/FMk/rSRmCzOVMtoWH88odn2uZqF8RLsSUWHcAqTgYmPD3pZ03L9ZAA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2708,8 +2637,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-arm64-musl@16.1.4:
-    resolution: {integrity: sha512-3Wm0zGYVCs6qDFAiSSDL+Z+r46EdtCv/2l+UlIdMbAq9hPJBvGu/rZOeuvCaIUjbArkmXac8HnTyQPJFzFWA0Q==}
+  /@next/swc-linux-arm64-musl@16.1.5:
+    resolution: {integrity: sha512-U+kBxGUY1xMAzDTXmuVMfhaWUZQAwzRaHJ/I6ihtR5SbTVUEaDRiEU9YMjy1obBWpdOBuk1bcm+tsmifYSygfw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -2717,8 +2646,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-gnu@16.1.4:
-    resolution: {integrity: sha512-lWAYAezFinaJiD5Gv8HDidtsZdT3CDaCeqoPoJjeB57OqzvMajpIhlZFce5sCAH6VuX4mdkxCRqecCJFwfm2nQ==}
+  /@next/swc-linux-x64-gnu@16.1.5:
+    resolution: {integrity: sha512-gq2UtoCpN7Ke/7tKaU7i/1L7eFLfhMbXjNghSv0MVGF1dmuoaPeEVDvkDuO/9LVa44h5gqpWeJ4mRRznjDv7LA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2726,8 +2655,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-linux-x64-musl@16.1.4:
-    resolution: {integrity: sha512-fHaIpT7x4gA6VQbdEpYUXRGyge/YbRrkG6DXM60XiBqDM2g2NcrsQaIuj375egnGFkJow4RHacgBOEsHfGbiUw==}
+  /@next/swc-linux-x64-musl@16.1.5:
+    resolution: {integrity: sha512-bQWSE729PbXT6mMklWLf8dotislPle2L70E9q6iwETYEOt092GDn0c+TTNj26AjmeceSsC4ndyGsK5nKqHYXjQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -2735,8 +2664,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-arm64-msvc@16.1.4:
-    resolution: {integrity: sha512-MCrXxrTSE7jPN1NyXJr39E+aNFBrQZtO154LoCz7n99FuKqJDekgxipoodLNWdQP7/DZ5tKMc/efybx1l159hw==}
+  /@next/swc-win32-arm64-msvc@16.1.5:
+    resolution: {integrity: sha512-LZli0anutkIllMtTAWZlDqdfvjWX/ch8AFK5WgkNTvaqwlouiD1oHM+WW8RXMiL0+vAkAJyAGEzPPjO+hnrSNQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -2744,8 +2673,8 @@ packages:
     dev: false
     optional: true
 
-  /@next/swc-win32-x64-msvc@16.1.4:
-    resolution: {integrity: sha512-JSVlm9MDhmTXw/sO2PE/MRj+G6XOSMZB+BcZ0a7d6KwVFZVpkHcb2okyoYFBaco6LeiL53BBklRlOrDDbOeE5w==}
+  /@next/swc-win32-x64-msvc@16.1.5:
+    resolution: {integrity: sha512-7is37HJTNQGhjPpQbkKjKEboHYQnCgpVt/4rBrrln0D9nderNxZ8ZWs8w1fAtzUx7wEyYjQ+/13myFgFj6K2Ng==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -4919,6 +4848,12 @@ packages:
     dependencies:
       undici-types: 6.21.0
 
+  /@types/node@25.1.0:
+    resolution: {integrity: sha512-t7frlewr6+cbx+9Ohpl0NOTKXZNV9xHRmNOvql47BFJKcEG1CxtxlPEEe+gR9uhVWM4DwhnvTF110mIL4yP9RA==}
+    dependencies:
+      undici-types: 7.16.0
+    dev: true
+
   /@types/phoenix@1.6.7:
     resolution: {integrity: sha512-oN9ive//QSBkf19rfDv45M7eZPi0eEXylht2OLEXicu5b4KoQ1OzXIw+xDSGWxSxe1JmepRR/ZH283vsu518/Q==}
     dev: false
@@ -5519,13 +5454,13 @@ packages:
       '@adiwajshing/keyed-db': 0.2.4
       '@cacheable/node-cache': 1.7.6
       '@hapi/boom': 9.1.4
-      '@whiskeysockets/eslint-config': github.com/whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.2)(typescript@5.9.3)
+      '@whiskeysockets/eslint-config': git/github.com+whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.2)(typescript@5.9.3)
       async-lock: 1.4.1
       audio-decode: 2.2.3
       axios: 1.13.3
       cache-manager: 5.7.6
       libphonenumber-js: 1.12.35
-      libsignal: github.com/WhiskeySockets/libsignal-node/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67
+      libsignal: git/github.com+WhiskeySockets/libsignal-node/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67
       lodash: 4.17.23
       music-metadata: 7.14.0
       pino: 9.14.0
@@ -5595,13 +5530,13 @@ packages:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
     engines: {node: '>= 14'}
 
-  /ai@5.0.123(zod@3.25.76):
-    resolution: {integrity: sha512-V3Imb0tg0pHCa6a/VsoW/FZpT07mwUw/4Hj6nexJC1Nvf1eyKQJyaYVkl+YTLnA8cKQSUkoarKhXWbFy4CSgjw==}
+  /ai@5.0.124(zod@3.25.76):
+    resolution: {integrity: sha512-Li6Jw9F9qsvFJXZPBfxj38ddP2iURCnMs96f9Q3OeQzrDVcl1hvtwSEAuxA/qmfh6SDV2ERqFUOFzigvr0697g==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
     dependencies:
-      '@ai-sdk/gateway': 2.0.29(zod@3.25.76)
+      '@ai-sdk/gateway': 2.0.30(zod@3.25.76)
       '@ai-sdk/provider': 2.0.1
       '@ai-sdk/provider-utils': 3.0.20(zod@3.25.76)
       '@opentelemetry/api': 1.9.0
@@ -5917,8 +5852,8 @@ packages:
     engines: {node: ^4.5.0 || >= 5.9}
     dev: false
 
-  /baseline-browser-mapping@2.9.18:
-    resolution: {integrity: sha512-e23vBV1ZLfjb9apvfPk4rHVu2ry6RIr2Wfs+O324okSidrX7pTAnEJPCh/O5BtRlr7QtZI7ktOP3vsqr7Z5XoA==}
+  /baseline-browser-mapping@2.9.19:
+    resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
 
   /basic-auth@2.0.1:
@@ -6006,7 +5941,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      baseline-browser-mapping: 2.9.18
+      baseline-browser-mapping: 2.9.19
       caniuse-lite: 1.0.30001766
       electron-to-chromium: 1.5.279
       node-releases: 2.0.27
@@ -8705,11 +8640,6 @@ packages:
     resolution: {integrity: sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA==}
     dev: false
 
-  /hono@4.11.4:
-    resolution: {integrity: sha512-U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA==}
-    engines: {node: '>=16.9.0'}
-    dev: false
-
   /hono@4.11.7:
     resolution: {integrity: sha512-l7qMiNee7t82bH3SeyUCt9UF15EVmaBvsppY2zQtrbIhl/yzBTny+YUxsVjSjQ6gaqaeVtZmGocom8TzBlA4Yw==}
     engines: {node: '>=16.9.0'}
@@ -8966,7 +8896,7 @@ packages:
   /is-bun-module@2.0.0:
     resolution: {integrity: sha512-gNCGbnnnnFAUGKeZ9PdbyeGYJqewpmc2aKHUEMO5nQPWU9lOmv7jcmQIv+qHD8fXW6W7qfuCwX4rY9LNRjXrkQ==}
     dependencies:
-      semver: 7.7.1
+      semver: 7.7.3
     dev: true
 
   /is-callable@1.2.7:
@@ -9439,7 +9369,7 @@ packages:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
       console-table-printer: 2.15.0
-      openai: 5.23.2(zod@3.25.76)
+      openai: 5.23.2(zod@4.3.6)
       p-queue: 6.6.2
       semver: 7.7.3
       uuid: 10.0.0
@@ -9469,7 +9399,7 @@ packages:
       console-table-printer: 2.15.0
       openai: 6.16.0(zod@3.25.76)
       p-queue: 6.6.2
-      semver: 7.7.1
+      semver: 7.7.3
       uuid: 10.0.0
     dev: false
 
@@ -9493,9 +9423,9 @@ packages:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
       console-table-printer: 2.15.0
-      openai: 5.23.2(zod@3.25.76)
+      openai: 5.23.2(zod@4.3.6)
       p-queue: 6.6.2
-      semver: 7.7.1
+      semver: 7.7.3
       uuid: 10.0.0
     dev: false
 
@@ -10844,7 +10774,7 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /next-intl@3.26.5(next@16.1.4)(react@19.2.3):
+  /next-intl@3.26.5(next@16.1.5)(react@19.2.3):
     resolution: {integrity: sha512-EQlCIfY0jOhRldiFxwSXG+ImwkQtDEfQeSOEQp6ieAGSLWGlgjdb/Ck/O7wMfC430ZHGeUKVKax8KGusTPKCgg==}
     peerDependencies:
       next: ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
@@ -10852,7 +10782,7 @@ packages:
     dependencies:
       '@formatjs/intl-localematcher': 0.5.10
       negotiator: 1.0.0
-      next: 16.1.4(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3)
+      next: 16.1.5(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3)
       react: 19.2.3
       use-intl: 3.26.5(react@19.2.3)
     dev: false
@@ -10861,8 +10791,8 @@ packages:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
     dev: true
 
-  /next@16.1.4(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3):
-    resolution: {integrity: sha512-gKSecROqisnV7Buen5BfjmXAm7Xlpx9o2ueVQRo5DxQcjC8d330dOM1xiGWc2k3Dcnz0In3VybyRPOsudwgiqQ==}
+  /next@16.1.5(@babel/core@7.28.6)(react-dom@19.2.3)(react@19.2.3):
+    resolution: {integrity: sha512-f+wE+NSbiQgh3DSAlTaw2FwY5yGdVViAtp8TotNQj4kk4Q8Bh1sC/aL9aH+Rg1YAVn18OYXsRDT7U/079jgP7w==}
     engines: {node: '>=20.9.0'}
     hasBin: true
     peerDependencies:
@@ -10882,23 +10812,23 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': 16.1.4
+      '@next/env': 16.1.5
       '@swc/helpers': 0.5.15
-      baseline-browser-mapping: 2.9.18
+      baseline-browser-mapping: 2.9.19
       caniuse-lite: 1.0.30001766
       postcss: 8.4.31
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       styled-jsx: 5.1.6(@babel/core@7.28.6)(react@19.2.3)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 16.1.4
-      '@next/swc-darwin-x64': 16.1.4
-      '@next/swc-linux-arm64-gnu': 16.1.4
-      '@next/swc-linux-arm64-musl': 16.1.4
-      '@next/swc-linux-x64-gnu': 16.1.4
-      '@next/swc-linux-x64-musl': 16.1.4
-      '@next/swc-win32-arm64-msvc': 16.1.4
-      '@next/swc-win32-x64-msvc': 16.1.4
+      '@next/swc-darwin-arm64': 16.1.5
+      '@next/swc-darwin-x64': 16.1.5
+      '@next/swc-linux-arm64-gnu': 16.1.5
+      '@next/swc-linux-arm64-musl': 16.1.5
+      '@next/swc-linux-x64-gnu': 16.1.5
+      '@next/swc-linux-x64-musl': 16.1.5
+      '@next/swc-win32-arm64-msvc': 16.1.5
+      '@next/swc-win32-x64-msvc': 16.1.5
       sharp: 0.34.5
     transitivePeerDependencies:
       - '@babel/core'
@@ -11076,7 +11006,7 @@ packages:
       regex-recursion: 6.0.2
     dev: false
 
-  /openai@5.23.2(zod@3.25.76):
+  /openai@5.23.2(zod@4.3.6):
     resolution: {integrity: sha512-MQBzmTulj+MM5O8SKEk/gL8a7s5mktS9zUtAkU257WjvobGc9nKcBuVwjyEEcb9SI8a8Y2G/mzn3vm9n1Jlleg==}
     hasBin: true
     peerDependencies:
@@ -11088,7 +11018,7 @@ packages:
       zod:
         optional: true
     dependencies:
-      zod: 3.25.76
+      zod: 4.3.6
     dev: false
 
   /openai@6.16.0(zod@3.25.76):
@@ -12205,11 +12135,6 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  /semver@7.7.1:
-    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   /semver@7.7.3:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
     engines: {node: '>=10'}
@@ -13018,6 +12943,37 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /ts-node@10.9.2(@types/node@25.1.0)(typescript@5.9.3):
+    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      '@swc/wasm':
+        optional: true
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.12
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 25.1.0
+      acorn: 8.15.0
+      acorn-walk: 8.3.4
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.4
+      make-error: 1.3.6
+      typescript: 5.9.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    dev: true
+
   /tsconfig-paths@3.15.0:
     resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
     dependencies:
@@ -13138,7 +13094,7 @@ packages:
       graphql: 16.12.0
       graphql-query-complexity: 0.12.0(graphql@16.12.0)
       graphql-scalars: 1.25.0(graphql@16.12.0)
-      semver: 7.7.1
+      semver: 7.7.3
       tslib: 2.8.1
     dev: false
 
@@ -13246,6 +13202,10 @@ packages:
 
   /undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+
+  /undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+    dev: true
 
   /undici@6.21.3:
     resolution: {integrity: sha512-gBLkYIlEnSp8pFbT64yFgGE6UIB9tAkhukC23PmMDCe5Nd+cRqKxSjw5y54MK2AZMgZfJWMaNE4nYUHgi1XEOw==}
@@ -13987,7 +13947,6 @@ packages:
 
   /zod@4.3.6:
     resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
-    dev: true
 
   /zustand@4.5.7(@types/react@19.2.10)(react@19.2.3):
     resolution: {integrity: sha512-CHOUy7mu3lbD6o6LJLfllpjkzhHXSBlX8B9+qPddUsIfeF5S/UZ5q0kmCsnRqT1UHFQZchNFDDzMbQsuesHWlw==}
@@ -14013,8 +13972,8 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
 
-  github.com/WhiskeySockets/libsignal-node/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67:
-    resolution: {tarball: https://codeload.github.com/WhiskeySockets/libsignal-node/tar.gz/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67}
+  git/github.com+WhiskeySockets/libsignal-node/1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67:
+    resolution: {commit: 1c30d7d7e76a3b0aa120b04dc6a26f5a12dccf67, repo: git@github.com:WhiskeySockets/libsignal-node.git, type: git}
     name: '@whiskeysockets/libsignal-node'
     version: 2.0.1
     dependencies:
@@ -14022,9 +13981,9 @@ packages:
       protobufjs: 6.8.8
     dev: false
 
-  github.com/whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.2)(typescript@5.9.3):
-    resolution: {tarball: https://codeload.github.com/whiskeysockets/eslint-config/tar.gz/299e8389baf62f9aa3034de18ff0d62cc0a5e838}
-    id: github.com/whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838
+  git/github.com+whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.2)(typescript@5.9.3):
+    resolution: {commit: 299e8389baf62f9aa3034de18ff0d62cc0a5e838, repo: git@github.com:whiskeysockets/eslint-config.git, type: git}
+    id: git@github.com+whiskeysockets/eslint-config/299e8389baf62f9aa3034de18ff0d62cc0a5e838
     name: '@whiskeysockets/eslint-config'
     version: 1.0.0
     peerDependencies:
