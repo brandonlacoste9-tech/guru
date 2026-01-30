@@ -4,12 +4,22 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 import os
+import asyncio
+import logging
 from dotenv import load_dotenv
 from pathlib import Path
+import uuid
 
 # Load environment variables from the root .env
 root_env = Path(__file__).resolve().parents[4] / ".env"
 load_dotenv(dotenv_path=root_env)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # browser-use imports
 # Note: Adjusting imports based on actual library structure
@@ -84,6 +94,121 @@ class ExecuteResponse(BaseModel):
 
 
 # ============================================
+# SESSION REGISTRY
+# ============================================
+
+class SessionInfo:
+    """Information about a browser session."""
+    def __init__(self, session_id: str, browser: Browser, agent: Agent, headless: bool, created_at: datetime):
+        self.session_id = session_id
+        self.browser = browser
+        self.agent = agent
+        self.headless = headless
+        self.created_at = created_at
+        self.last_activity = datetime.utcnow()
+        self.task_count = 0
+
+class SessionRegistry:
+    """Registry of active browser sessions with persistence."""
+    
+    def __init__(self):
+        self._sessions: Dict[str, SessionInfo] = {}
+        self._lock = asyncio.Lock()
+        # Session timeout: 30 minutes of inactivity
+        self.session_timeout_seconds = 30 * 60
+        
+    async def get_or_create(
+        self,
+        session_id: Optional[str] = None,
+        headless: bool = True,
+        llm_provider: str = "google",
+        llm_model: Optional[str] = None,
+    ) -> SessionInfo:
+        """Get existing session or create new one."""
+        async with self._lock:
+            # Generate session ID if not provided
+            if not session_id:
+                session_id = str(uuid.uuid4())
+            
+            # Check if session exists and is still valid
+            if session_id in self._sessions:
+                session = self._sessions[session_id]
+                # Check if session has expired
+                time_since_activity = (datetime.utcnow() - session.last_activity).total_seconds()
+                if time_since_activity > self.session_timeout_seconds:
+                    logger.info(f"Session {session_id} expired, closing...")
+                    await self.close_session(session_id)
+                else:
+                    session.last_activity = datetime.utcnow()
+                    logger.info(f"Reusing existing session {session_id}")
+                    return session
+            
+            # Create new session
+            logger.info(f"Creating new browser session: {session_id} (headless={headless})")
+            
+            if not Agent:
+                raise HTTPException(status_code=500, detail="browser-use library not installed")
+            
+            llm = get_llm(llm_provider, llm_model)
+            browser = Browser(headless=headless)
+            agent = Agent(task="", llm=llm, browser=browser)
+            
+            session_info = SessionInfo(
+                session_id=session_id,
+                browser=browser,
+                agent=agent,
+                headless=headless,
+                created_at=datetime.utcnow()
+            )
+            
+            self._sessions[session_id] = session_info
+            return session_info
+    
+    async def get(self, session_id: str) -> Optional[SessionInfo]:
+        """Get session by ID."""
+        async with self._lock:
+            return self._sessions.get(session_id)
+    
+    async def close_session(self, session_id: str) -> bool:
+        """Close and remove a session."""
+        async with self._lock:
+            if session_id not in self._sessions:
+                return False
+            
+            session = self._sessions.pop(session_id)
+            logger.info(f"Closing session {session_id}")
+            try:
+                # Clean up browser resources
+                if hasattr(session.browser, 'close'):
+                    await session.browser.close()
+            except Exception as e:
+                logger.warning(f"Error closing session {session_id}: {e}")
+            return True
+    
+    async def close_all(self):
+        """Close all sessions."""
+        async with self._lock:
+            session_ids = list(self._sessions.keys())
+            for session_id in session_ids:
+                await self.close_session(session_id)
+    
+    def list_sessions(self) -> List[Dict[str, Any]]:
+        """List all active sessions."""
+        return [
+            {
+                "session_id": s.session_id,
+                "headless": s.headless,
+                "created_at": s.created_at.isoformat(),
+                "last_activity": s.last_activity.isoformat(),
+                "task_count": s.task_count,
+            }
+            for s in self._sessions.values()
+        ]
+
+# Global session registry
+session_registry = SessionRegistry()
+
+# ============================================
 # CORE LOGIC
 # ============================================
 
@@ -112,6 +237,7 @@ def get_llm(provider: str, model: Optional[str]):
 
 @app.post("/execute", response_model=ExecuteResponse)
 async def execute_task(request: ExecuteRequest):
+    """Execute a task - creates new browser instance (legacy endpoint)."""
     start_time = datetime.utcnow()
 
     if not Agent:
@@ -155,6 +281,125 @@ async def execute_task(request: ExecuteRequest):
             started_at=start_time.isoformat(),
             completed_at=end_time.isoformat(),
         )
+
+
+# ============================================
+# SESSION-BASED ENDPOINTS
+# ============================================
+
+class SessionExecuteRequest(BaseModel):
+    task_description: str
+    session_id: Optional[str] = None
+    headless: bool = True
+    llm_provider: str = "google"
+    llm_model: Optional[str] = None
+    run_id: Optional[str] = None
+
+
+@app.post("/sessions/create")
+async def create_session(
+    headless: bool = True,
+    llm_provider: str = "google",
+    llm_model: Optional[str] = None,
+):
+    """Create a new persistent browser session."""
+    try:
+        session = await session_registry.get_or_create(
+            headless=headless,
+            llm_provider=llm_provider,
+            llm_model=llm_model,
+        )
+        return {
+            "success": True,
+            "session_id": session.session_id,
+            "created_at": session.created_at.isoformat(),
+        }
+    except Exception as e:
+        logger.error(f"Error creating session: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/sessions/{session_id}/execute", response_model=ExecuteResponse)
+async def execute_with_session(session_id: str, request: SessionExecuteRequest):
+    """Execute a task using an existing session (persistent browser)."""
+    start_time = datetime.utcnow()
+    
+    # Get or create session
+    session = await session_registry.get_or_create(
+        session_id=session_id,
+        headless=request.headless,
+        llm_provider=request.llm_provider,
+        llm_model=request.llm_model,
+    )
+    
+    session.task_count += 1
+    session.last_activity = datetime.utcnow()
+    
+    # Update agent task
+    session.agent.task = request.task_description
+    
+    try:
+        history = await session.agent.run()
+        
+        # Process history
+        history_logs = []
+        for idx, step in enumerate(history):
+            history_logs.append(
+                ActionLog(
+                    step=idx + 1,
+                    action=str(getattr(step, "action", "task")),
+                    result="success",
+                    timestamp=datetime.utcnow().isoformat(),
+                )
+            )
+        
+        end_time = datetime.utcnow()
+        return ExecuteResponse(
+            success=True,
+            run_id=request.run_id or session_id,
+            history=history_logs,
+            duration_ms=int((end_time - start_time).total_seconds() * 1000),
+            started_at=start_time.isoformat(),
+            completed_at=end_time.isoformat(),
+        )
+    except Exception as e:
+        logger.error(f"Error executing task in session {session_id}: {e}")
+        end_time = datetime.utcnow()
+        return ExecuteResponse(
+            success=False,
+            run_id=request.run_id or session_id,
+            error=str(e),
+            duration_ms=int((end_time - start_time).total_seconds() * 1000),
+            started_at=start_time.isoformat(),
+            completed_at=end_time.isoformat(),
+        )
+
+
+@app.delete("/sessions/{session_id}")
+async def close_session_endpoint(session_id: str):
+    """Close a specific session."""
+    success = await session_registry.close_session(session_id)
+    if success:
+        return {"success": True, "message": f"Session {session_id} closed"}
+    else:
+        raise HTTPException(status_code=404, detail=f"Session {session_id} not found")
+
+
+@app.get("/sessions")
+async def list_sessions():
+    """List all active sessions."""
+    return {
+        "success": True,
+        "sessions": session_registry.list_sessions(),
+        "count": len(session_registry._sessions),
+    }
+
+
+@app.delete("/sessions")
+async def close_all_sessions():
+    """Close all active sessions."""
+    await session_registry.close_all()
+    return {"success": True, "message": "All sessions closed"}
 
 
 @app.websocket("/ws/{run_id}")

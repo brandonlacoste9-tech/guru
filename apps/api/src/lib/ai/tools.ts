@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { browserBridge } from "./browserBridge";
+import { sidecarClient } from "./sidecarClient";
+import { sessionManager } from "./sessionManager";
 
 /**
  * Zod schema for browser task arguments
@@ -58,9 +60,15 @@ export const browseTheWebTool = {
 
 /**
  * Handler function for the browse_the_web tool
- * Implements graceful fallback: browser-use (primary/fast) -> deepseek -> google
+ * Implements graceful fallback with session persistence support:
+ * 1. Try session-based execution (if guruId/runId provided)
+ * 2. Fallback to browserBridge (spawns new process)
+ * 3. Fallback to alternative providers
  */
-export async function handleBrowseTheWeb(args: unknown) {
+export async function handleBrowseTheWeb(
+  args: unknown,
+  context?: { guruId?: string; runId?: string }
+) {
   const parseResult = BrowseTheWebSchema.safeParse(args);
   if (!parseResult.success) {
     return {
@@ -74,7 +82,47 @@ export async function handleBrowseTheWeb(args: unknown) {
 
   console.log(`🐝 [BrowserTool] Starting mission: ${task}`);
 
-  // 1. Try Primary (browser-use optimized)
+  // 1. Try session-based execution (if context provided)
+  if (context?.guruId && context?.runId) {
+    try {
+      const sessionId = await sessionManager.getOrCreateSession(
+        context.guruId,
+        context.runId,
+        { headless, llm_provider: "google" }
+      );
+
+      const sessionResult = await sidecarClient.executeWithSession({
+        task_description: task,
+        session_id: sessionId,
+        headless,
+        llm_provider: "google",
+        run_id: context.runId,
+      });
+
+      if (sessionResult.success) {
+        return {
+          success: true,
+          summary: `Completed in ${sessionResult.history.length} steps`,
+          content: sessionResult.history.map((h) => `${h.step}. ${h.action}`).join("\n"),
+          meta: {
+            provider: "sidecar-session",
+            steps: sessionResult.history.length,
+            session_id: sessionId,
+          },
+        };
+      }
+
+      console.warn(
+        `⚠️ Session-based execution failed: ${sessionResult.error}. Attempting fallback...`
+      );
+    } catch (error: any) {
+      console.warn(
+        `⚠️ Session execution error: ${error.message}. Attempting fallback...`
+      );
+    }
+  }
+
+  // 2. Try Primary (browser-use optimized via browserBridge)
   try {
     const primaryResult = await browserBridge.executeTask({
       task,
@@ -95,7 +143,7 @@ export async function handleBrowseTheWeb(args: unknown) {
     );
   }
 
-  // 2. Fallbacks
+  // 3. Fallbacks
   for (const provider of providers) {
     console.log(
       `🔄 [BrowserTool] Retrying with fallback provider: ${provider}`,

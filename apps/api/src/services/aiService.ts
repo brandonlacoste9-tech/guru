@@ -113,6 +113,7 @@ export class AIService {
     meta?: {
       globalConfidence?: number;
       personality?: any;
+      runId?: string;
     };
   }) {
     console.log(`🤖 Guru ${params.guruId || "Unknown"} is reasoning...`);
@@ -135,7 +136,7 @@ export class AIService {
         system: params.systemPrompt,
         prompt: params.userPrompt,
         tools: {
-          ...this.getBrowserTools(),
+          ...this.getBrowserTools(params.guruId, params.meta?.runId),
           ...this.getMemoryTools(params.guruId),
           ...this.getExpertTools(params.tools || []),
         } as any,
@@ -179,7 +180,7 @@ export class AIService {
           system: params.systemPrompt,
           prompt: params.userPrompt,
           tools: {
-            ...this.getBrowserTools(),
+            ...this.getBrowserTools(params.guruId, params.meta?.runId),
             ...this.getMemoryTools(params.guruId),
             ...this.getExpertTools(params.tools || []),
           } as any,
@@ -204,12 +205,13 @@ export class AIService {
   /**
    * Browser automation tools powered by browser-use
    */
-  private getBrowserTools(): any {
+  private getBrowserTools(guruId?: string, runId?: string): any {
     return {
       browse_the_web: tool({
         description: browseTheWebTool.function.description,
         parameters: BrowseTheWebSchema,
-        execute: async (args: any) => handleBrowseTheWeb(args),
+        execute: async (args: any) =>
+          handleBrowseTheWeb(args, { guruId, runId }),
       } as any),
     };
   }

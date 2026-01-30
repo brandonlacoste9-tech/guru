@@ -202,6 +202,7 @@ export class GuruExecutorService {
             meta: {
               personality: (guru as any).personalityBias,
               globalConfidence: cogDecision.assessment.skill_sufficiency,
+              runId: executionIdForSocket, // Pass runId for session persistence
             },
           });
         },
