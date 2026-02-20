@@ -34,7 +34,7 @@
     "@types/jsdom": "^27.0.0",
     "@types/socket.io": "^3.0.2",
     "ai": "^6.0.48",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "axios-retry": "^4.5.0",
     "bullmq": "^5.66.5",
     "cors": "^2.8.5",
